@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" strict="true">
+    <Properties>
+        <Property name="filename">logfile.log</Property>
+    </Properties>
+    <Appenders>
+        <Appender type="Console" name="Console" target="SYSTEM_OUT">
+            <Layout type="PatternLayout">
+                <Pattern>%d{HH:mm:ss.SSS} - %msg%n</Pattern>
+            </Layout>
+        </Appender>
+    </Appenders>
+    <Loggers>
+        <Logger name="org.hibernate.SQL" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <!--<Logger name="org.hibernate.type.descriptor.sql" level="trace" additivity="false">-->
+            <!--<AppenderRef ref="Console"/>-->
+        <!--</Logger>-->
+        <Logger name="com.allaroundjava" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="warn">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
