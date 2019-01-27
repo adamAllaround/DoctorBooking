@@ -8,7 +8,7 @@ import javax.persistence.NamedQuery;
 import java.time.LocalDateTime;
 
 @NamedQuery(name = "appointmentSlotsBetween",
-        query = "select a from AppointmentSlot a where a.doctor=:doctor and (a.endTime >= :startTime and a.startTime <= :endTime)")
+        query = "select a from AppointmentSlot a where a.doctor=:doctor and (a.endTime > :startTime and a.startTime < :endTime)")
 
 @Entity
 public class AppointmentSlot extends ModelBase {

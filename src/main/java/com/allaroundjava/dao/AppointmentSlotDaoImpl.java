@@ -21,6 +21,7 @@ public class AppointmentSlotDaoImpl extends BaseDao<AppointmentSlot> implements 
         Query query = entityManager.createNamedQuery("appointmentSlotsBetween", AppointmentSlot.class);
         query.setParameter("startTime", startTime);
         query.setParameter("endTime", endTime);
+        query.setParameter("doctor", doctor);
         return query.getResultList();
     }
 }
