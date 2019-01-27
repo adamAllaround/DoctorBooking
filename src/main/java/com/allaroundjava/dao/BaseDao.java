@@ -49,4 +49,12 @@ abstract class BaseDao<T extends ModelBase> implements Dao<T> {
     public void merge(T item) {
         executeInTransaction(entityManager -> entityManager.merge(item));
     }
+
+    @Override
+    public void delete(T item) {
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.remove(item);
+        entityManager.close();
+
+    }
 }

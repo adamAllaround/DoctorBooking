@@ -4,10 +4,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import java.time.LocalDateTime;
 
+@NamedQuery(name = "appointmentSlotsBetween",
+        query = "select a from AppointmentSlot a where a.doctor=:doctor and (a.endTime >= :startTime and a.startTime <= :endTime)")
+
 @Entity
-public class AvailabilityPeriod extends ModelBase {
+public class AppointmentSlot extends ModelBase {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
 
@@ -15,10 +19,10 @@ public class AvailabilityPeriod extends ModelBase {
     @JoinColumn(nullable = false, name = "doctor_id")
     private Doctor doctor;
 
-    AvailabilityPeriod() {
+    AppointmentSlot() {
     }
 
-    public AvailabilityPeriod(LocalDateTime startTime, LocalDateTime endTime, Doctor doctor) {
+    public AppointmentSlot(LocalDateTime startTime, LocalDateTime endTime, Doctor doctor) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.doctor = doctor;

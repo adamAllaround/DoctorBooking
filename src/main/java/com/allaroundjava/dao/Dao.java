@@ -8,4 +8,6 @@ public interface Dao<T> {
     void persist(T item);
 
     void merge(T item);
+
+    void delete(T item);
 }
