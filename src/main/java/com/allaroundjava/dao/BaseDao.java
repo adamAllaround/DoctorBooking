@@ -13,14 +13,14 @@ import java.util.function.Consumer;
 abstract class BaseDao<T extends ModelBase> implements Dao<T> {
     private static final Logger log = LogManager.getLogger(BaseDao.class);
     private final Class<T> aClass;
-    protected final EntityManagerFactory emf;
+    final EntityManagerFactory emf;
 
     BaseDao(Class<T> aClass, EntityManagerFactory emf) {
         this.aClass = aClass;
         this.emf = emf;
     }
 
-    protected void executeInTransaction(Consumer<EntityManager> consumer) {
+    private void executeInTransaction(Consumer<EntityManager> consumer) {
         EntityManager entityManager = emf.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
@@ -52,6 +52,8 @@ abstract class BaseDao<T extends ModelBase> implements Dao<T> {
 
     @Override
     public void delete(T item) {
+        log.debug("Deleting {} with id {}",
+                item.getClass(), item.getId());
         EntityManager entityManager = emf.createEntityManager();
         entityManager.remove(item);
         entityManager.close();
