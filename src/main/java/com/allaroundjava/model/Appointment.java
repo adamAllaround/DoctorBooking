@@ -4,7 +4,7 @@ import org.hibernate.annotations.Immutable;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import java.time.Period;
+import java.time.LocalDateTime;
 
 @Entity
 @Immutable
@@ -13,15 +13,17 @@ public class Appointment extends ModelBase{
     private Doctor doctor;
     @ManyToOne(optional = false)
     private Patient patient;
-    private Period period;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     Appointment() {
     }
 
-    public Appointment(Doctor doctor, Patient patient, Period period) {
+    public Appointment(Doctor doctor, Patient patient, LocalDateTime startTime, LocalDateTime endTime) {
         this.doctor = doctor;
         this.patient = patient;
-        this.period = period;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Doctor getDoctor() {
@@ -32,7 +34,11 @@ public class Appointment extends ModelBase{
         return patient;
     }
 
-    public Period getPeriod() {
-        return period;
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 }

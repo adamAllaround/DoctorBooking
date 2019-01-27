@@ -4,11 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.time.Period;
+import java.time.LocalDateTime;
 
 @Entity
 public class AvailabilityPeriod extends ModelBase {
-    private Period period;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "doctor_id")
@@ -17,20 +18,29 @@ public class AvailabilityPeriod extends ModelBase {
     AvailabilityPeriod() {
     }
 
-    public AvailabilityPeriod(Period period, Doctor doctor) {
-        this.period = period;
+    public AvailabilityPeriod(LocalDateTime startTime, LocalDateTime endTime, Doctor doctor) {
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.doctor = doctor;
-    }
-
-    public Period getPeriod() {
-        return period;
-    }
-
-    public void setPeriod(Period period) {
-        this.period = period;
     }
 
     public Doctor getDoctor() {
         return doctor;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }
