@@ -11,3 +11,4 @@ settings.gradle
 /Jdbc/gradle
 /target
 *.log
+*.sh
