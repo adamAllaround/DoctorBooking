@@ -11,7 +11,7 @@ import java.util.List;
 
 public class AppointmentSlotDaoImpl extends BaseDao<AppointmentSlot> implements AppointmentSlotDao {
 
-    AppointmentSlotDaoImpl(EntityManagerFactory emf) {
+    public AppointmentSlotDaoImpl(EntityManagerFactory emf) {
         super(AppointmentSlot.class, emf);
     }
 
