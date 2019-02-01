@@ -5,7 +5,7 @@ import com.allaroundjava.model.Doctor;
 import javax.persistence.EntityManagerFactory;
 
 public class DoctorDao extends BaseDao<Doctor> {
-    protected DoctorDao(EntityManagerFactory emf) {
+    public DoctorDao(EntityManagerFactory emf) {
         super(Doctor.class, emf);
     }
 }
