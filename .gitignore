@@ -9,6 +9,6 @@ settings.gradle
 *.iml
 /Hibernate/gradle
 /Jdbc/gradle
-/target
+*/target
 *.log
 *.sh
