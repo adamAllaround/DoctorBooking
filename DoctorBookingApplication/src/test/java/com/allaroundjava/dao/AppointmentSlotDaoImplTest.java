@@ -13,21 +13,21 @@ import java.util.List;
 public class AppointmentSlotDaoImplTest {
     private EntityManagerFactory emf;
     private AppointmentSlotDao appointmentSlotDao;
-    private DoctorDao doctorDao;
+    private DoctorDaoImpl doctorDaoImpl;
     private Doctor doctor;
     private AppointmentSlot appointmentSlot;
 
     public AppointmentSlotDaoImplTest() {
         this.emf = Persistence.createEntityManagerFactory("DoctorBooking");
         this.appointmentSlotDao = new AppointmentSlotDaoImpl(emf);
-        this.doctorDao = new DoctorDao(emf);
+        this.doctorDaoImpl = new DoctorDaoImpl(emf);
         this.doctor = createDoctor();
         this.appointmentSlot = createAppointmentSlot(doctor);
     }
 
     private Doctor createDoctor() {
         Doctor doctor = new Doctor("Henry Fonda");
-        doctorDao.persist(doctor);
+        doctorDaoImpl.persist(doctor);
         return doctor;
     }
 

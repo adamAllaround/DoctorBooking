@@ -6,7 +6,8 @@ import com.allaroundjava.dao.AppointmentSlotDao;
 import com.allaroundjava.dao.AppointmentSlotDaoImpl;
 import com.allaroundjava.dao.Dao;
 import com.allaroundjava.dao.DoctorDao;
-import com.allaroundjava.dao.PatientDao;
+import com.allaroundjava.dao.DoctorDaoImpl;
+import com.allaroundjava.dao.PatientDaoImpl;
 import com.allaroundjava.model.AppointmentSlot;
 import com.allaroundjava.model.Doctor;
 import com.allaroundjava.model.Patient;
@@ -39,14 +40,14 @@ public class BookingAppointmentTest {
     private DoctorService doctorService;
     private AppointmentSlotDao appointmentSlotDao;
     private AppointmentDao appointmentDao;
-    private Dao<Doctor> doctorDao;
+    private DoctorDao doctorDao;
     private Dao<Patient> patientDao;
 
     public BookingAppointmentTest() {
         this.emf = Persistence.createEntityManagerFactory("DoctorBooking");
         this.appointmentSlotDao = new AppointmentSlotDaoImpl(emf);
-        this.doctorDao = new DoctorDao(emf);
-        this.patientDao = new PatientDao(emf);
+        this.doctorDao = new DoctorDaoImpl(emf);
+        this.patientDao = new PatientDaoImpl(emf);
         this.appointmentDao = new AppointmentDaoImpl(emf);
         this.doctorService = new DoctorServiceImpl(doctorDao);
         this.appointmentSlotService = new AppointmentSlotServiceImpl(appointmentSlotDao);

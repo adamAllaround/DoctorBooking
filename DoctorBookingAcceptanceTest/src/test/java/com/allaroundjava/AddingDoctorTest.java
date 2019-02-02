@@ -2,6 +2,7 @@ package com.allaroundjava;
 
 import com.allaroundjava.dao.Dao;
 import com.allaroundjava.dao.DoctorDao;
+import com.allaroundjava.dao.DoctorDaoImpl;
 import com.allaroundjava.model.Doctor;
 import com.allaroundjava.service.DoctorService;
 import com.allaroundjava.service.DoctorServiceImpl;
@@ -12,12 +13,12 @@ import javax.persistence.Persistence;
 
 public class AddingDoctorTest {
     private EntityManagerFactory emf;
-    private Dao<Doctor> doctorDao;
+    private DoctorDao doctorDao;
     private DoctorService doctorService;
 
     public AddingDoctorTest() {
         this.emf = Persistence.createEntityManagerFactory("DoctorBooking");
-        doctorDao = new DoctorDao(emf);
+        doctorDao = new DoctorDaoImpl(emf);
         doctorService = new DoctorServiceImpl(doctorDao);
     }
 

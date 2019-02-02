@@ -2,10 +2,6 @@ package com.allaroundjava.dao;
 
 import com.allaroundjava.model.Doctor;
 
-import javax.persistence.EntityManagerFactory;
+public interface DoctorDao extends Dao<Doctor> {
 
-public class DoctorDao extends BaseDao<Doctor> {
-    public DoctorDao(EntityManagerFactory emf) {
-        super(Doctor.class, emf);
-    }
 }
