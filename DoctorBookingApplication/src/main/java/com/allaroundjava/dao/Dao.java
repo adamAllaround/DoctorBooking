@@ -10,4 +10,6 @@ public interface Dao<T> {
     void merge(T item);
 
     void delete(T item);
+
+    void refersh(T item);
 }

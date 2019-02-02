@@ -23,7 +23,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void createAppointment(Doctor doctor, Patient patient, AppointmentSlot appointmentSlot) {
         log.debug("Creating appointment for doctor[id={}] and patient[id={}] at {} to {}", doctor.getId(),
                 patient.getId(), appointmentSlot.getStartTime(), appointmentSlot.getEndTime());
-
         Appointment appointment = new Appointment(doctor, patient, appointmentSlot.getStartTime(), appointmentSlot.getEndTime());
         appointmentDao.persist(appointment);
         appointmentSlotDao.delete(appointmentSlot);

@@ -54,9 +54,16 @@ abstract class BaseDao<T extends ModelBase> implements Dao<T> {
     public void delete(T item) {
         log.debug("Deleting {} with id {}",
                 item.getClass(), item.getId());
-        EntityManager entityManager = emf.createEntityManager();
-        entityManager.remove(item);
-        entityManager.close();
+        executeInTransaction(entityManager -> {
+            T retrievedItem = entityManager.find(aClass, item.getId());
+            entityManager.remove(retrievedItem);
+        });
+    }
 
+    @Override
+    public void refersh(T item) {
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.refresh(item);
+        entityManager.close();
     }
 }
