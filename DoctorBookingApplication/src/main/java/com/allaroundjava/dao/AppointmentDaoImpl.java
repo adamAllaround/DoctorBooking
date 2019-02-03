@@ -1,11 +1,11 @@
 package com.allaroundjava.dao;
 
 import com.allaroundjava.model.Appointment;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManagerFactory;
-
+@Repository
 public class AppointmentDaoImpl extends BaseDao<Appointment> implements AppointmentDao {
-    public AppointmentDaoImpl(EntityManagerFactory emf) {
-        super(Appointment.class, emf);
+    public AppointmentDaoImpl() {
+        super(Appointment.class);
     }
 }

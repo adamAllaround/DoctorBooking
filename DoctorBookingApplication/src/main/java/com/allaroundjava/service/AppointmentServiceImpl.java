@@ -8,12 +8,19 @@ import com.allaroundjava.model.Doctor;
 import com.allaroundjava.model.Patient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
+@Service
+@Transactional
 public class AppointmentServiceImpl implements AppointmentService {
     private static final Logger log = LogManager.getLogger(AppointmentServiceImpl.class);
-    private AppointmentDao appointmentDao;
-    private AppointmentSlotDao appointmentSlotDao;
+    private final AppointmentDao appointmentDao;
+    private final AppointmentSlotDao appointmentSlotDao;
 
+    @Autowired
     public AppointmentServiceImpl(AppointmentDao appointmentDao, AppointmentSlotDao appointmentSlotDao) {
         this.appointmentDao = appointmentDao;
         this.appointmentSlotDao = appointmentSlotDao;

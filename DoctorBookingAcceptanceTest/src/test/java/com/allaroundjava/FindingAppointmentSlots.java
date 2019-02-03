@@ -1,49 +1,56 @@
-package com.allaroundjava.dao;
+package com.allaroundjava;
 
+import com.allaroundjava.config.AppConfig;
+import com.allaroundjava.config.JpaConfig;
+import com.allaroundjava.dao.AppointmentSlotDao;
+import com.allaroundjava.dao.DoctorDao;
 import com.allaroundjava.model.AppointmentSlot;
 import com.allaroundjava.model.Doctor;
+import com.allaroundjava.service.AppointmentSlotService;
+import com.allaroundjava.service.DoctorService;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.time.LocalDateTime;
 import java.util.List;
-
-public class AppointmentSlotDaoImplTest {
-    private EntityManagerFactory emf;
-    private AppointmentSlotDao appointmentSlotDao;
-    private DoctorDaoImpl doctorDaoImpl;
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {JpaConfig.class, AppConfig.class})
+public class FindingAppointmentSlots {
+    @Autowired
+    private AppointmentSlotService appointmentSlotService;
+    @Autowired
+    private DoctorService doctorService;
     private Doctor doctor;
-    private AppointmentSlot appointmentSlot;
 
-    public AppointmentSlotDaoImplTest() {
-        this.emf = Persistence.createEntityManagerFactory("DoctorBooking");
-        this.appointmentSlotDao = new AppointmentSlotDaoImpl(emf);
-        this.doctorDaoImpl = new DoctorDaoImpl(emf);
+    @Before
+    public void setUp() {
         this.doctor = createDoctor();
-        this.appointmentSlot = createAppointmentSlot(doctor);
+        createAppointmentSlot(doctor);
     }
 
     private Doctor createDoctor() {
         Doctor doctor = new Doctor("Henry Fonda");
-        doctorDaoImpl.persist(doctor);
+        doctorService.addDoctor(doctor);
         return doctor;
     }
 
-    private AppointmentSlot createAppointmentSlot(Doctor doctor) {
+    private void createAppointmentSlot(Doctor doctor) {
         LocalDateTime slotStart = LocalDateTime.of(2019, 1, 27, 13, 0, 0);
         LocalDateTime slotEnd = LocalDateTime.of(2019, 1, 27, 15, 0, 0);
         AppointmentSlot appointmentSlot = new AppointmentSlot(slotStart, slotEnd, doctor);
-        appointmentSlotDao.persist(appointmentSlot);
-        return appointmentSlot;
+        appointmentSlotService.addAppointmentSlot(doctor, slotStart, slotEnd);
     }
 
     @Test
     public void whenPeriodOutsideOfSlot_thenNotReturned() {
         LocalDateTime periodStart = LocalDateTime.of(2019, 1, 27, 10, 0, 0);
         LocalDateTime periodEnd = LocalDateTime.of(2019, 1, 27, 10, 30, 0);
-        List<AppointmentSlot> availableSlots = appointmentSlotDao.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
+        List<AppointmentSlot> availableSlots = appointmentSlotService.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
         Assert.assertEquals(0, availableSlots.size());
     }
 
@@ -51,7 +58,7 @@ public class AppointmentSlotDaoImplTest {
     public void whenSlotInsidePeriod_thenSlotReturned() {
         LocalDateTime periodStart = LocalDateTime.of(2019, 1, 27, 10, 0, 0);
         LocalDateTime periodEnd = LocalDateTime.of(2019, 1, 27, 15, 30, 0);
-        List<AppointmentSlot> availableSlots = appointmentSlotDao.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
+        List<AppointmentSlot> availableSlots = appointmentSlotService.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
         Assert.assertEquals(1, availableSlots.size());
     }
 
@@ -59,12 +66,12 @@ public class AppointmentSlotDaoImplTest {
     public void whenSlotPartiallyInPeriod_thenSlotReturned() {
         LocalDateTime periodStart = LocalDateTime.of(2019, 1, 27, 10, 0, 0);
         LocalDateTime periodEnd = LocalDateTime.of(2019, 1, 27, 14, 30, 0);
-        List<AppointmentSlot> availableSlots = appointmentSlotDao.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
+        List<AppointmentSlot> availableSlots = appointmentSlotService.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
         Assert.assertEquals(1, availableSlots.size());
 
         periodStart = LocalDateTime.of(2019, 1, 27, 14, 0, 0);
         periodEnd = LocalDateTime.of(2019, 1, 27, 16, 30, 0);
-        availableSlots = appointmentSlotDao.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
+        availableSlots = appointmentSlotService.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
         Assert.assertEquals(1, availableSlots.size());
     }
 
@@ -72,12 +79,12 @@ public class AppointmentSlotDaoImplTest {
     public void whenSlotTouchingPeriodOutside_thenNotReturned() {
         LocalDateTime periodStart = LocalDateTime.of(2019, 1, 27, 10, 0, 0);
         LocalDateTime periodEnd = LocalDateTime.of(2019, 1, 27, 13, 0, 0);
-        List<AppointmentSlot> availableSlots = appointmentSlotDao.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
+        List<AppointmentSlot> availableSlots = appointmentSlotService.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
         Assert.assertEquals(0, availableSlots.size());
 
         periodStart = LocalDateTime.of(2019, 1, 27, 15, 0, 0);
         periodEnd = LocalDateTime.of(2019, 1, 27, 15, 30, 0);
-        availableSlots = appointmentSlotDao.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
+        availableSlots = appointmentSlotService.getAppointmentSlotsBetween(doctor, periodStart, periodEnd);
         Assert.assertEquals(0, availableSlots.size());
     }
 }

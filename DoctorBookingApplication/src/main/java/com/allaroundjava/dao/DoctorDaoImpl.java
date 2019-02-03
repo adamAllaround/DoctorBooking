@@ -1,11 +1,11 @@
 package com.allaroundjava.dao;
 
 import com.allaroundjava.model.Doctor;
+import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManagerFactory;
-
+@Repository
 public class DoctorDaoImpl extends BaseDao<Doctor> implements DoctorDao {
-    public DoctorDaoImpl(EntityManagerFactory emf) {
-        super(Doctor.class, emf);
+    public DoctorDaoImpl() {
+        super(Doctor.class);
     }
 }
