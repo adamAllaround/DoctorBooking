@@ -25,9 +25,11 @@ Here are the stories for version 0.1.
     * When slot is booked, the slot is marked as removed *
     
 Version 0.1 code is available here. 
+https://github.com/adamAllaround/DoctorBooking/releases
 
 ### V1.0
 Version 1.0 is a rest service with exposed functionalities from version 0.1
 * As a user I can access all the version 0.1 functionalities through Rest API. 
 
-Version 0.1 code is available here. 
+Version 1.0 code is available here. 
+https://github.com/adamAllaround/DoctorBooking/releases
