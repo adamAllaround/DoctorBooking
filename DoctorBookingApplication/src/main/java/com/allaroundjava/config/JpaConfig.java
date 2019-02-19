@@ -32,7 +32,7 @@ public class JpaConfig {
         return emf;
     }
 
-    private DataSource createDataSource() {
+    protected DataSource createDataSource() {
         EmbeddedDatabaseBuilder builder =
                 new EmbeddedDatabaseBuilder();
         return builder.setType(EmbeddedDatabaseType.H2).build();

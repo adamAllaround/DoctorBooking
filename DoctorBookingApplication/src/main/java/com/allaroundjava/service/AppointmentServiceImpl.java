@@ -17,6 +17,7 @@ import javax.transaction.Transactional;
 @Transactional
 public class AppointmentServiceImpl implements AppointmentService {
     private static final Logger log = LogManager.getLogger(AppointmentServiceImpl.class);
+    private static final String NOT_FOUND = "Appointment Slot not found";
     private final AppointmentDao appointmentDao;
     private final AppointmentSlotDao appointmentSlotDao;
 
@@ -30,8 +31,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     public void createAppointment(Doctor doctor, Patient patient, AppointmentSlot appointmentSlot) {
         log.debug("Creating appointment for doctor[id={}] and patient[id={}] at {} to {}", doctor.getId(),
                 patient.getId(), appointmentSlot.getStartTime(), appointmentSlot.getEndTime());
-        Appointment appointment = new Appointment(doctor, patient, appointmentSlot.getStartTime(), appointmentSlot.getEndTime());
+        AppointmentSlot slot = appointmentSlotDao.getById(appointmentSlot.getId()).orElseThrow(() -> new IllegalArgumentException(NOT_FOUND));
+        slot.setDeleted(true);
+        Appointment appointment = new Appointment(doctor, patient, slot.getStartTime(), slot.getEndTime());
         appointmentDao.persist(appointment);
-        appointmentSlotDao.delete(appointmentSlot);
+        appointmentSlotDao.persist(slot);
     }
 }

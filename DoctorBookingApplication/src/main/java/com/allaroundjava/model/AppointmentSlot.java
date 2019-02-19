@@ -8,7 +8,7 @@ import javax.persistence.NamedQuery;
 import java.time.LocalDateTime;
 
 @NamedQuery(name = "appointmentSlotsBetween",
-        query = "select a from AppointmentSlot a where a.doctor=:doctor and (a.endTime > :startTime and a.startTime < :endTime)")
+        query = "select a from AppointmentSlot a where a.isDeleted=false and a.doctor=:doctor and (a.endTime > :startTime and a.startTime < :endTime)")
 
 @Entity
 public class AppointmentSlot extends ModelBase {
@@ -18,6 +18,8 @@ public class AppointmentSlot extends ModelBase {
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(nullable = false, name = "doctor_id")
     private Doctor doctor;
+
+    private boolean isDeleted;
 
     AppointmentSlot() {
     }
@@ -46,5 +48,13 @@ public class AppointmentSlot extends ModelBase {
 
     public void setEndTime(LocalDateTime endTime) {
         this.endTime = endTime;
+    }
+
+    public boolean isDeleted() {
+        return isDeleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        isDeleted = deleted;
     }
 }
