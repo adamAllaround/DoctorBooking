@@ -7,7 +7,7 @@
     <groupId>com.allaroundjava</groupId>
     <artifactId>DoctorBooking</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1</version>
     <build>
         <plugins>
             <plugin>
