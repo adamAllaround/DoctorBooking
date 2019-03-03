@@ -1,7 +1,7 @@
 # Appointment booking application
 This application, in its final version, will be a rest api allowing to book doctor appointments. 
 Its main goal is to exercise what we've already learned about Hibernate and put it into practice. 
-The architecture and more in-depth description will be available on allaroundJava blog.
+The architecture and more in-depth description is available on [allaroundJava blog.](https://allaroundjava.com/complete-spring-hibernate-application/)
 
 ## User Stories
 This is a set of user stories characterizing each application version. 
@@ -24,7 +24,7 @@ Here are the stories for version 0.1.
     * When slot is booked an appointment is registered
     * When slot is booked, the slot is marked as removed *
     
-Version 0.1 code is available here. 
+Version 0.1 code is available in [version-0.1 branch](https://github.com/adamAllaround/DoctorBooking/tree/version-0.1). 
 
 ### V1.0
 Version 1.0 is a rest service with exposed functionalities from version 0.1
