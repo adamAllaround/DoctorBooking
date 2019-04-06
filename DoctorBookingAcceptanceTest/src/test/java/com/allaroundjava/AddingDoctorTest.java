@@ -2,6 +2,7 @@ package com.allaroundjava;
 
 import com.allaroundjava.config.AppConfig;
 import com.allaroundjava.config.JpaConfig;
+import com.allaroundjava.config.TestJpaConfig;
 import com.allaroundjava.dao.DoctorDao;
 import com.allaroundjava.dao.DoctorDaoImpl;
 import com.allaroundjava.model.Doctor;
@@ -17,7 +18,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {JpaConfig.class, AppConfig.class})
+@ContextConfiguration(classes = {TestJpaConfig.class, AppConfig.class})
 public class AddingDoctorTest {
     @Autowired
     private DoctorService doctorService;

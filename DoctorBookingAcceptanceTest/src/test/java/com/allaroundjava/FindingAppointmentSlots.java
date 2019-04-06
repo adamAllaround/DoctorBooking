@@ -2,6 +2,7 @@ package com.allaroundjava;
 
 import com.allaroundjava.config.AppConfig;
 import com.allaroundjava.config.JpaConfig;
+import com.allaroundjava.config.TestJpaConfig;
 import com.allaroundjava.dao.AppointmentSlotDao;
 import com.allaroundjava.dao.DoctorDao;
 import com.allaroundjava.model.AppointmentSlot;
@@ -19,7 +20,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.time.LocalDateTime;
 import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {JpaConfig.class, AppConfig.class})
+@ContextConfiguration(classes = {TestJpaConfig.class, AppConfig.class})
 public class FindingAppointmentSlots {
     @Autowired
     private AppointmentSlotService appointmentSlotService;

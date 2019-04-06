@@ -2,6 +2,7 @@ package com.allaroundjava;
 
 import com.allaroundjava.config.AppConfig;
 import com.allaroundjava.config.JpaConfig;
+import com.allaroundjava.config.TestJpaConfig;
 import com.allaroundjava.model.AppointmentSlot;
 import com.allaroundjava.model.Doctor;
 import com.allaroundjava.model.Patient;
@@ -27,7 +28,7 @@ import java.util.List;
  * ** When slot is booked, the slot is marked as removed *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {JpaConfig.class, AppConfig.class})
+@ContextConfiguration(classes = {TestJpaConfig.class, AppConfig.class})
 public class BookingAppointmentTest {
     @Autowired
     private AppointmentSlotService appointmentSlotService;
@@ -67,5 +68,7 @@ public class BookingAppointmentTest {
                 LocalDateTime.of(2019, 1, 28, 10, 0, 0),
                 LocalDateTime.of(2019, 1, 28, 13, 20, 0));
         Assert.assertEquals(1, availableSlots.size());
+
+        Assert.assertTrue(appointmentSlotService.getById(appointmentSlot.getId()).get().isDeleted());
     }
 }

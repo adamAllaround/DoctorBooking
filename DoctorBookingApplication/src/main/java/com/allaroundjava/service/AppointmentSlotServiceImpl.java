@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -27,5 +28,10 @@ public class AppointmentSlotServiceImpl implements AppointmentSlotService {
     @Override
     public List<AppointmentSlot> getAppointmentSlotsBetween(Doctor doctor, LocalDateTime startTime, LocalDateTime endTime) {
         return appointmentSlotDao.getAppointmentSlotsBetween(doctor, startTime, endTime);
+    }
+
+    @Override
+    public Optional<AppointmentSlot> getById(Long id) {
+        return appointmentSlotDao.getById(id);
     }
 }
