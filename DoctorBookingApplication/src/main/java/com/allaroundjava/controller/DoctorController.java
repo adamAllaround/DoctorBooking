@@ -2,6 +2,7 @@ package com.allaroundjava.controller;
 
 import com.allaroundjava.dto.DoctorDto;
 import com.allaroundjava.dto.mapper.DoctorDtoMapper;
+import com.allaroundjava.exception.NotFoundException;
 import com.allaroundjava.model.Doctor;
 import com.allaroundjava.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class DoctorController {
     @RequestMapping(method = RequestMethod.GET, produces = "application/xml", value = "/{id}")
     public ResponseEntity<DoctorDto> getDoctor(@PathVariable("id") Long id) {
         Optional<Doctor> doctorOptional = doctorService.getById(id);
-        Doctor doctor = doctorOptional.orElseThrow(() -> new RuntimeException("Doctor Not Found"));
+        Doctor doctor = doctorOptional.orElseThrow(() -> new NotFoundException("Doctor Not Found"));
         return ResponseEntity.status(HttpStatus.OK).body(DoctorDtoMapper.toDto(doctor));
     }
 
