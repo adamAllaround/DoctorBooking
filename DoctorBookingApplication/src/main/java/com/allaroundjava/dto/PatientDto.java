@@ -1,5 +1,25 @@
 package com.allaroundjava.dto;
 
-public class PatientDto {
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement
+public class PatientDto {
+    private Long id;
+    private String name;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

@@ -39,11 +39,12 @@ public class DoctorControllerTest {
 
     @Test
     public void whenDoctorExists_thenHttp200_andDoctorReturned() throws Exception {
-        Doctor testDoctor = new Doctor("Doctor");
+        String doctorName = "Doctor";
+        Doctor testDoctor = new Doctor(doctorName);
         Mockito.doReturn(Optional.of(testDoctor)).when(doctorService).getById(1L);
         mockMvc.perform(MockMvcRequestBuilders.get("/doctors/1"))
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
-        .andExpect(MockMvcResultMatchers.content().string(containsString("Doctor")));
+        .andExpect(MockMvcResultMatchers.content().string(containsString(doctorName)));
     }
 
     @Test
