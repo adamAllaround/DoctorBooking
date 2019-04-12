@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -20,5 +21,10 @@ public class PatientServiceImpl implements PatientService {
     @Override
     public void addPatient(Patient patient) {
         patientDao.persist(patient);
+    }
+
+    @Override
+    public Optional<Patient> getById(Long id) {
+        return patientDao.getById(id);
     }
 }
