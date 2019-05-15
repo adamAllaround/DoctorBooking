@@ -1,5 +1,6 @@
 package com.allaroundjava.controller;
 
+import com.allaroundjava.model.AppointmentSlot;
 import com.allaroundjava.model.Doctor;
 import com.allaroundjava.service.AppointmentSlotService;
 import com.allaroundjava.service.DoctorService;
@@ -12,8 +13,10 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -61,6 +64,25 @@ public class AppointmentSlotControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.NOT_FOUND.value()));
 
         Mockito.verify(appointmentSlotService, never()).addAppointmentSlot(any());
+    }
+
+    @Test
+    public void whenGetForNonExistentId_thenNotFound() throws Exception {
+        Mockito.doReturn(Optional.empty()).when(appointmentSlotService).getById(1L);
+        mockMvc.perform(MockMvcRequestBuilders.get("/slots/1"))
+                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.NOT_FOUND.value()));
+    }
+
+    @Test
+    public void whenGetForExistingId_thenOk() throws Exception {
+        LocalDateTime slotStart = LocalDateTime.of(2019, 5, 13, 10, 0, 0);
+        LocalDateTime slotEnd = LocalDateTime.of(2019, 5, 13, 11, 0, 0);
+        AppointmentSlot appointmentSlot = new AppointmentSlot(slotStart, slotEnd, doctor);
+
+        Mockito.doReturn(Optional.of(appointmentSlot)).when(appointmentSlotService).getById(1L);
+        mockMvc.perform(MockMvcRequestBuilders.get("/slots/1"))
+                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
+        .andExpect(MockMvcResultMatchers.content().string(containsString("startTime")));
     }
 
 }

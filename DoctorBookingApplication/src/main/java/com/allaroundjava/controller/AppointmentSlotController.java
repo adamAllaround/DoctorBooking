@@ -32,4 +32,11 @@ public class AppointmentSlotController {
         appointmentSlotService.addAppointmentSlot(appointmentSlot);
         return ResponseEntity.status(HttpStatus.CREATED).body(AppointmentSlotMapper.toDto(appointmentSlot));
     }
+
+    @GetMapping(value = "/{id}", produces = "application/xml")
+    public ResponseEntity<AppointmentSlotDto> getSlotById(@PathVariable("id") Long id) {
+        AppointmentSlot appointmentSlot = appointmentSlotService.getById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Appointment Slot with id %d not found", id)));
+        return ResponseEntity.status(HttpStatus.OK).body(AppointmentSlotMapper.toDto(appointmentSlot));
+    }
 }
