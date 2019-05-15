@@ -14,10 +14,14 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 
@@ -84,5 +88,33 @@ public class AppointmentSlotControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
         .andExpect(MockMvcResultMatchers.content().string(containsString("startTime")));
     }
+
+    @Test
+    public void whenGetForSlots_andDoctorNotExists_thenNotFound() throws Exception {
+        Mockito.doReturn(Optional.empty()).when(doctorService).getById(1L);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/slots?doctorId=1"))
+                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.NOT_FOUND.value()));
+    }
+
+    @Test
+    public void whenGetForSlots_andDoctorExists_thenOk() throws Exception {
+        LocalDateTime slotStart = LocalDateTime.of(2019, 5, 13, 10, 0, 0);
+        LocalDateTime slotEnd = LocalDateTime.of(2019, 5, 13, 11, 0, 0);
+        AppointmentSlot appointmentSlot = new AppointmentSlot(slotStart, slotEnd, doctor);
+
+        Mockito.doReturn(Optional.of(doctor)).when(doctorService).getById(1L);
+        List<AppointmentSlot> appointmentSlots = new ArrayList<>();
+        appointmentSlots.add(appointmentSlot);
+
+        Mockito.doReturn(appointmentSlots).when(appointmentSlotService).getAppointmentSlotsBetween(doctor, slotStart, slotEnd);
+
+        String path = String.format("/slots?doctorId=1&startDate=%s&endDate=%s", slotStart.format(DateTimeFormatter.ISO_DATE_TIME), slotEnd.format(DateTimeFormatter.ISO_DATE_TIME));
+        mockMvc.perform(MockMvcRequestBuilders.get(path))
+                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
+                .andExpect(MockMvcResultMatchers.content().string(containsString("AppointmentSlotCollection")));
+    }
+
+
 
 }
