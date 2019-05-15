@@ -27,7 +27,8 @@ public class AppointmentSlotServiceImplTest {
         Doctor doctor = new Doctor("Doctor Quinn");
         LocalDateTime startTime = LocalDateTime.of(2019, 1, 27, 10, 0, 0);
         LocalDateTime endTime = LocalDateTime.of(2019, 1, 27, 10, 30, 0);
-        appointmentSlotService.addAppointmentSlot(doctor, startTime, endTime);
-        Mockito.verify(appointmentSlotDao, times(1)).persist(ArgumentMatchers.any(AppointmentSlot.class));
+        AppointmentSlot appointmentSlot = new AppointmentSlot(startTime, endTime, doctor);
+        appointmentSlotService.addAppointmentSlot(appointmentSlot);
+        Mockito.verify(appointmentSlotDao, times(1)).persist(appointmentSlot);
     }
 }

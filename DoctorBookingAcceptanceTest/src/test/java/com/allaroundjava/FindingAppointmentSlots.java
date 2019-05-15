@@ -44,7 +44,7 @@ public class FindingAppointmentSlots {
         LocalDateTime slotStart = LocalDateTime.of(2019, 1, 27, 13, 0, 0);
         LocalDateTime slotEnd = LocalDateTime.of(2019, 1, 27, 15, 0, 0);
         AppointmentSlot appointmentSlot = new AppointmentSlot(slotStart, slotEnd, doctor);
-        appointmentSlotService.addAppointmentSlot(doctor, slotStart, slotEnd);
+        appointmentSlotService.addAppointmentSlot(appointmentSlot);
     }
 
     @Test

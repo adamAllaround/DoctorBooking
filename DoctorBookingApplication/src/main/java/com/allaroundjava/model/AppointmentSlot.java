@@ -21,7 +21,7 @@ public class AppointmentSlot extends ModelBase {
 
     private boolean isDeleted;
 
-    AppointmentSlot() {
+    public AppointmentSlot() {
     }
 
     public AppointmentSlot(LocalDateTime startTime, LocalDateTime endTime, Doctor doctor) {

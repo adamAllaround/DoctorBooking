@@ -47,14 +47,14 @@ public class BookingAppointmentTest {
         patientService.addPatient(patient);
 
         LocalDateTime firstSlotStart = LocalDateTime.of(2019, 1, 28, 12, 0, 0);
-        appointmentSlotService.addAppointmentSlot(doctor,
-                firstSlotStart,
-                LocalDateTime.of(2019, 1, 30, 13, 0, 0));
+        LocalDateTime firstSlotEnd = LocalDateTime.of(2019, 1, 30, 13, 0, 0);
+        AppointmentSlot appointmentSlotFirst = new AppointmentSlot(firstSlotStart, firstSlotEnd, doctor);
+        appointmentSlotService.addAppointmentSlot(appointmentSlotFirst);
 
-        LocalDateTime lastSlotend = LocalDateTime.of(2019, 1, 28, 13, 30, 0);
-        appointmentSlotService.addAppointmentSlot(doctor,
-                LocalDateTime.of(2019, 1, 28, 13, 0, 0),
-                lastSlotend);
+        LocalDateTime lastSlotStart = LocalDateTime.of(2019, 1, 28, 13, 0, 0);
+        LocalDateTime lastSlotEnd = LocalDateTime.of(2019, 1, 28, 13, 30, 0);
+        AppointmentSlot appointmentSlotLast = new AppointmentSlot(lastSlotStart, lastSlotEnd, doctor);
+        appointmentSlotService.addAppointmentSlot(appointmentSlotLast);
 
         List<AppointmentSlot> availableSlots = appointmentSlotService.getAppointmentSlotsBetween(doctor,
                 LocalDateTime.of(2019, 1, 28, 10, 0, 0),
