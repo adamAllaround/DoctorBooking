@@ -1,5 +1,7 @@
 package com.allaroundjava.controller;
 
+import com.allaroundjava.model.Appointment;
+import com.allaroundjava.model.AppointmentSlot;
 import com.allaroundjava.model.Patient;
 import com.allaroundjava.service.AppointmentService;
 import com.allaroundjava.service.AppointmentSlotService;
@@ -7,12 +9,14 @@ import com.allaroundjava.service.PatientService;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class AppointmentControllerTest {
@@ -21,7 +25,7 @@ public class AppointmentControllerTest {
     private AppointmentSlotService appointmentSlotService;
     private PatientService patientService;
     private MockMvc mockMvc;
-    private final static String REQUEST_BODY = "<appointmentDto><doctorId>1</doctorId><patientId>1</patientId><startTime>2019-05-13T20:00:00</startTime><endTime>2019-05-13T21:00:00</endTime></appointmentDto>";
+    private final static String REQUEST_BODY = "<appointmentDto><patientId>1</patientId><appointmentSlotId>1</appointmentSlotId><startTime>2019-05-13T20:00:00</startTime><endTime>2019-05-13T21:00:00</endTime></appointmentDto>";
 
     public AppointmentControllerTest() {
         this.appointmentService = Mockito.mock(AppointmentService.class);
@@ -53,5 +57,21 @@ public class AppointmentControllerTest {
                 .contentType(MediaType.APPLICATION_XML)
                 .content(REQUEST_BODY))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
+    }
+
+    @Test
+    public void whenBookingAppointment_andPatientAndSlotExist_thenOk() throws Exception {
+        Patient patient = new Patient("Patient John");
+        Mockito.doReturn(Optional.of(patient)).when(patientService).getById(1L);
+        AppointmentSlot appointmentSlot = new AppointmentSlot();
+        appointmentSlot.setStartTime(LocalDateTime.of(2019, 5, 21, 10, 0, 0));
+        appointmentSlot.setEndTime(LocalDateTime.of(2019, 5, 21, 10, 30, 0));
+        Mockito.doReturn(Optional.of(appointmentSlot)).when(appointmentSlotService).getById(1L);
+        Appointment appointment = new Appointment(appointmentSlot, patient);
+        Mockito.doReturn(appointment).when(appointmentService).createAppointment(patient, appointmentSlot);
+        mockMvc.perform(MockMvcRequestBuilders.post("/appointments")
+                .contentType(MediaType.APPLICATION_XML)
+                .content(REQUEST_BODY))
+                .andExpect(MockMvcResultMatchers.status().is(HttpStatus.CREATED.value()));
     }
 }
