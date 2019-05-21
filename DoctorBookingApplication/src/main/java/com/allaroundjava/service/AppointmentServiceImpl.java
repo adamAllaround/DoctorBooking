@@ -28,13 +28,14 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    public void createAppointment(Doctor doctor, Patient patient, AppointmentSlot appointmentSlot) {
-        log.debug("Creating appointment for doctor[id={}] and patient[id={}] at {} to {}", doctor.getId(),
+    public Appointment createAppointment(Patient patient, AppointmentSlot appointmentSlot) {
+        log.debug("Creating appointment for Appointment Slot[id={}] and patient[id={}] at {} to {}", appointmentSlot.getId(),
                 patient.getId(), appointmentSlot.getStartTime(), appointmentSlot.getEndTime());
         AppointmentSlot slot = appointmentSlotDao.getById(appointmentSlot.getId()).orElseThrow(() -> new IllegalArgumentException(NOT_FOUND));
         slot.setDeleted(true);
-        Appointment appointment = new Appointment(doctor, patient, slot.getStartTime(), slot.getEndTime());
+        Appointment appointment = new Appointment(slot, patient);
         appointmentDao.persist(appointment);
         appointmentSlotDao.persist(slot);
+        return appointment;
     }
 }

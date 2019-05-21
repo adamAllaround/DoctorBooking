@@ -36,7 +36,7 @@ public class AppointmentServiceImplTest {
         LocalDateTime appointmentEnd = LocalDateTime.of(2019, 1, 27, 10, 30, 0);
         AppointmentSlot appointmentSlot = new AppointmentSlot(appointmentStart, appointmentEnd, doctor);
         Mockito.when(appointmentSlotDao.getById(appointmentSlot.getId())).thenReturn(Optional.of(appointmentSlot));
-        appointmentService.createAppointment(doctor, patient, appointmentSlot);
+        appointmentService.createAppointment(patient, appointmentSlot);
 
         Mockito.verify(appointmentDao, Mockito.times(1)).persist(ArgumentMatchers.any(Appointment.class));
         Mockito.verify(appointmentSlotDao, Mockito.times(1)).persist(ArgumentMatchers.any(AppointmentSlot.class));

@@ -31,14 +31,12 @@ public class AddingAppointmentSlotTest {
 
         LocalDateTime firstSlotStart = LocalDateTime.of(2019, 1, 30, 10, 0, 0);
         LocalDateTime midPoint = LocalDateTime.of(2019, 1, 30, 10, 30, 0);
-        appointmentSlotService.addAppointmentSlot(doctor,
-                firstSlotStart,
-                midPoint);
+        AppointmentSlot appointmentSlotFirst = new AppointmentSlot(firstSlotStart, midPoint, doctor);
+        appointmentSlotService.addAppointmentSlot(appointmentSlotFirst);
 
         LocalDateTime lastSlotEnd = LocalDateTime.of(2019, 1, 30, 11, 0, 0);
-        appointmentSlotService.addAppointmentSlot(doctor,
-                midPoint,
-                lastSlotEnd);
+        AppointmentSlot appointmentSlotSecond = new AppointmentSlot(midPoint, lastSlotEnd, doctor);
+        appointmentSlotService.addAppointmentSlot(appointmentSlotSecond);
 
         List<AppointmentSlot> availableSlots = appointmentSlotService.getAppointmentSlotsBetween(doctor, firstSlotStart, lastSlotEnd);
         Assert.assertEquals(2, availableSlots.size());

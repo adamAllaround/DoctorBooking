@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AppointmentSlotService {
-    void addAppointmentSlot(Doctor doctor, LocalDateTime startTime, LocalDateTime endTime);
+    void addAppointmentSlot(AppointmentSlot appointmentSlot);
 
     List<AppointmentSlot> getAppointmentSlotsBetween(Doctor doctor, LocalDateTime startTime, LocalDateTime endTime);
 

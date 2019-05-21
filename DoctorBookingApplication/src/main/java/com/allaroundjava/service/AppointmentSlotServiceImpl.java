@@ -20,8 +20,7 @@ public class AppointmentSlotServiceImpl implements AppointmentSlotService {
     }
 
     @Override
-    public void addAppointmentSlot(Doctor doctor, LocalDateTime startTime, LocalDateTime endTime) {
-        AppointmentSlot appointmentSlot = new AppointmentSlot(startTime, endTime, doctor);
+    public void addAppointmentSlot(AppointmentSlot appointmentSlot) {
         appointmentSlotDao.persist(appointmentSlot);
     }
 
