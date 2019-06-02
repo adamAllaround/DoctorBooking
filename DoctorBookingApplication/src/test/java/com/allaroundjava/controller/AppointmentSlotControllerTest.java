@@ -91,9 +91,13 @@ public class AppointmentSlotControllerTest {
 
     @Test
     public void whenGetForSlots_andDoctorNotExists_thenNotFound() throws Exception {
+        LocalDateTime slotStart = LocalDateTime.of(2019, 5, 13, 10, 0, 0);
+        LocalDateTime slotEnd = LocalDateTime.of(2019, 5, 13, 11, 0, 0);
+
         Mockito.doReturn(Optional.empty()).when(doctorService).getById(1L);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/slots?doctorId=1"))
+        String path = String.format("/slots?doctorId=1&startDate=%s&endDate=%s", slotStart.format(DateTimeFormatter.ISO_DATE_TIME), slotEnd.format(DateTimeFormatter.ISO_DATE_TIME));
+        mockMvc.perform(MockMvcRequestBuilders.get(path))
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.NOT_FOUND.value()));
     }
 
@@ -114,7 +118,4 @@ public class AppointmentSlotControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.OK.value()))
                 .andExpect(MockMvcResultMatchers.content().string(containsString("AppointmentSlotCollection")));
     }
-
-
-
 }
