@@ -5,11 +5,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.Version;
 import java.time.LocalDateTime;
 
 @NamedQuery(name = "appointmentSlotsBetween",
         query = "select a from AppointmentSlot a where a.isDeleted=false and a.doctor=:doctor and (a.endTime > :startTime and a.startTime < :endTime)")
-
+@NamedQuery(name = "findAvailableById",
+        query = "select a from AppointmentSlot a where a.isDeleted=false and a.id=:id")
 @Entity
 public class AppointmentSlot extends ModelBase {
     private LocalDateTime startTime;
@@ -20,6 +22,9 @@ public class AppointmentSlot extends ModelBase {
     private Doctor doctor;
 
     private boolean isDeleted;
+
+    @Version
+    private int version;
 
     public AppointmentSlot() {
     }

@@ -29,17 +29,26 @@ public class AppointmentServiceImplTest {
     }
 
     @Test
-    public void whenCreateAppointment_thenPersistAndDeleteCalled() {
+    public void whenCreateAppointment_thenSlotIsDeletedAndApointmentPersisted() {
         Doctor doctor = new Doctor("Doctor Quinn");
         Patient patient = new Patient("James Bond");
-        LocalDateTime appointmentStart = LocalDateTime.of(2019, 1, 27, 10, 0, 0);
-        LocalDateTime appointmentEnd = LocalDateTime.of(2019, 1, 27, 10, 30, 0);
-        AppointmentSlot appointmentSlot = new AppointmentSlot(appointmentStart, appointmentEnd, doctor);
-        Mockito.when(appointmentSlotDao.getById(appointmentSlot.getId())).thenReturn(Optional.of(appointmentSlot));
+        AppointmentSlot appointmentSlot = createAppointmentSlot(doctor);
+        Mockito.when(appointmentSlotDao.getAvailableById(appointmentSlot.getId())).thenReturn(Optional.of(appointmentSlot));
         appointmentService.createAppointment(patient, appointmentSlot);
 
         Mockito.verify(appointmentDao, Mockito.times(1)).persist(ArgumentMatchers.any(Appointment.class));
         Mockito.verify(appointmentSlotDao, Mockito.times(1)).persist(ArgumentMatchers.any(AppointmentSlot.class));
         Assert.assertTrue(appointmentSlot.isDeleted());
+    }
+
+    private AppointmentSlot createAppointmentSlot(Doctor doctor) {
+        LocalDateTime appointmentStart = LocalDateTime.of(2019, 1, 27, 10, 0, 0);
+        LocalDateTime appointmentEnd = LocalDateTime.of(2019, 1, 27, 10, 30, 0);
+        return new AppointmentSlot(appointmentStart, appointmentEnd, doctor);
+    }
+
+    @Test
+    public void whenBookingAlreadyBookedSlot_thenException() {
+
     }
 }

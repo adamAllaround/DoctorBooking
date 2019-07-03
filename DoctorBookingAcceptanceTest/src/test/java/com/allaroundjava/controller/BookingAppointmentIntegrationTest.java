@@ -57,11 +57,46 @@ public class BookingAppointmentIntegrationTest {
                 appointmentEnd.plusHours(2).format(DateTimeFormatter.ISO_DATE_TIME));
         ResponseEntity<AppointmentSlotCollectionDto> availableSlots = restTemplate.getForEntity(slotsUrl, AppointmentSlotCollectionDto.class);
         Assert.assertTrue(availableSlots.getStatusCode().is2xxSuccessful());
-        Assert.assertEquals(1,availableSlots.getBody().getAppointmentSlotDtoList().size());
+        Assert.assertEquals(1, availableSlots.getBody().getAppointmentSlotDtoList().size());
 
         HttpEntity<AppointmentDto> appointmentDtoHttpEntity = getAppointmentDtoHttpEntity(slotExchange.getBody().getId(), patientExchange.getBody().getId());
         ResponseEntity<AppointmentDto> appointmentExchange = restTemplate.exchange("/appointments", HttpMethod.POST, appointmentDtoHttpEntity, AppointmentDto.class);
         Assert.assertTrue(appointmentExchange.getStatusCode().is2xxSuccessful());
+    }
+
+    @Test
+    public void whenAppointmentSlotIsBooked_thenItCannotBeBookedAgain() {
+        HttpEntity<DoctorDto> doctorHttpEntity = getDoctorDtoHttpEntity("Doctor Fred");
+        HttpEntity<PatientDto> patientDtoHttpEntity = getPatientDtoHttpEntity("Patient Anne");
+
+        ResponseEntity<DoctorDto> doctorExchange = restTemplate.exchange("/doctors", HttpMethod.POST, doctorHttpEntity, DoctorDto.class);
+        Assert.assertTrue(doctorExchange.getStatusCode().is2xxSuccessful());
+
+        ResponseEntity<PatientDto> patientExchange = restTemplate.exchange("/patients", HttpMethod.POST, patientDtoHttpEntity, PatientDto.class);
+        Assert.assertTrue(patientExchange.getStatusCode().is2xxSuccessful());
+
+        LocalDateTime appointmentStart = LocalDateTime.of(2019, 6, 4, 10, 0, 0);
+        LocalDateTime appointmentEnd = LocalDateTime.of(2019, 6, 4, 11, 0, 0);
+
+        HttpEntity<AppointmentSlotDto> appointmentSlotDtoHttpEntity = getAppointmentSlotDtoHttpEntity(doctorExchange.getBody().getId(), appointmentStart, appointmentEnd);
+        ResponseEntity<AppointmentSlotDto> slotExchange = restTemplate.exchange("/slots", HttpMethod.POST, appointmentSlotDtoHttpEntity, AppointmentSlotDto.class);
+        Assert.assertTrue(slotExchange.getStatusCode().is2xxSuccessful());
+
+        String slotsUrl = String.format("/slots?doctorId=%d&startDate=%s&endDate=%s",
+                doctorExchange.getBody().getId(),
+                appointmentStart.minusHours(1).format(DateTimeFormatter.ISO_DATE_TIME),
+                appointmentEnd.plusHours(1).format(DateTimeFormatter.ISO_DATE_TIME));
+        ResponseEntity<AppointmentSlotCollectionDto> availableSlots = restTemplate.getForEntity(slotsUrl, AppointmentSlotCollectionDto.class);
+        Assert.assertTrue(availableSlots.getStatusCode().is2xxSuccessful());
+        Assert.assertEquals(1, availableSlots.getBody().getAppointmentSlotDtoList().size());
+
+        HttpEntity<AppointmentDto> appointmentDtoHttpEntity = getAppointmentDtoHttpEntity(slotExchange.getBody().getId(), patientExchange.getBody().getId());
+        ResponseEntity<AppointmentDto> appointmentExchange = restTemplate.exchange("/appointments", HttpMethod.POST, appointmentDtoHttpEntity, AppointmentDto.class);
+        Assert.assertTrue(appointmentExchange.getStatusCode().is2xxSuccessful());
+
+        appointmentDtoHttpEntity = getAppointmentDtoHttpEntity(slotExchange.getBody().getId(), patientExchange.getBody().getId());
+        appointmentExchange = restTemplate.exchange("/appointments", HttpMethod.POST, appointmentDtoHttpEntity, AppointmentDto.class);
+        Assert.assertTrue(appointmentExchange.getStatusCode().is4xxClientError());
     }
 
     private HttpEntity<PatientDto> getPatientDtoHttpEntity(String name) {
