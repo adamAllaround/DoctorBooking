@@ -1,18 +1,20 @@
 package com.allaroundjava.dto;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class PatientDto {
-    private Long id;
+public class PatientDto extends ResourceSupport {
+    private Long entityId;
     private String name;
 
-    public Long getId() {
-        return id;
+    public Long getEntityId() {
+        return entityId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEntityId(Long entityId) {
+        this.entityId = entityId;
     }
 
     public String getName() {

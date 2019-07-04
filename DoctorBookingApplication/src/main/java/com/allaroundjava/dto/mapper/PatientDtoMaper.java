@@ -6,7 +6,7 @@ import com.allaroundjava.model.Patient;
 public class PatientDtoMaper {
     public static PatientDto toDto(Patient patient) {
         PatientDto patientDto = new PatientDto();
-        patientDto.setId(patient.getId());
+        patientDto.setEntityId(patient.getId());
         patientDto.setName(patient.getName());
         return patientDto;
     }
