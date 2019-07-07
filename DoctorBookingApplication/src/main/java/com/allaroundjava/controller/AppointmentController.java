@@ -5,11 +5,9 @@ import com.allaroundjava.dto.mapper.AppointmentMapper;
 import com.allaroundjava.exception.NotFoundException;
 import com.allaroundjava.model.Appointment;
 import com.allaroundjava.model.AppointmentSlot;
-import com.allaroundjava.model.Doctor;
 import com.allaroundjava.model.Patient;
 import com.allaroundjava.service.AppointmentService;
 import com.allaroundjava.service.AppointmentSlotService;
-import com.allaroundjava.service.DoctorService;
 import com.allaroundjava.service.PatientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +38,6 @@ public class AppointmentController {
         AppointmentSlot appointmentSlot = appointmentSlotService.getById(appointmentDto.getAppointmentSlotId()).orElseThrow(() -> new NotFoundException("Appointment Slot cannot be found"));
 
         Appointment appointment = appointmentService.createAppointment(patient, appointmentSlot);
-        return ResponseEntity.status(HttpStatus.OK).body(AppointmentMapper.toDto(appointment));
+        return ResponseEntity.status(HttpStatus.CREATED).body(AppointmentMapper.toDto(appointment));
     }
 }

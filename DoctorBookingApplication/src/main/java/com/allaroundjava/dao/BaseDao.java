@@ -5,7 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.Optional;
 
 abstract class BaseDao<T extends ModelBase> implements Dao<T> {
@@ -47,5 +49,13 @@ abstract class BaseDao<T extends ModelBase> implements Dao<T> {
     @Override
     public void refersh(T item) {
         entityManager.refresh(item);
+    }
+
+    Optional<T> getSingleAsOptional(TypedQuery<T> query) {
+        try {
+            return Optional.of(query.getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 }

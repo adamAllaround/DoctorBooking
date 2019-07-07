@@ -2,9 +2,9 @@ package com.allaroundjava.service;
 
 import com.allaroundjava.dao.AppointmentDao;
 import com.allaroundjava.dao.AppointmentSlotDao;
+import com.allaroundjava.exception.NotFoundException;
 import com.allaroundjava.model.Appointment;
 import com.allaroundjava.model.AppointmentSlot;
-import com.allaroundjava.model.Doctor;
 import com.allaroundjava.model.Patient;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -31,7 +31,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     public Appointment createAppointment(Patient patient, AppointmentSlot appointmentSlot) {
         log.debug("Creating appointment for Appointment Slot[id={}] and patient[id={}] at {} to {}", appointmentSlot.getId(),
                 patient.getId(), appointmentSlot.getStartTime(), appointmentSlot.getEndTime());
-        AppointmentSlot slot = appointmentSlotDao.getById(appointmentSlot.getId()).orElseThrow(() -> new IllegalArgumentException(NOT_FOUND));
+        AppointmentSlot slot = appointmentSlotDao.getAvailableById(appointmentSlot.getId()).orElseThrow(() -> new NotFoundException(NOT_FOUND));
         slot.setDeleted(true);
         Appointment appointment = new Appointment(slot, patient);
         appointmentDao.persist(appointment);
