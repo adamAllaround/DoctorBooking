@@ -62,7 +62,7 @@ public class BookingAppointmentTest {
         Assert.assertEquals(2, availableSlots.size());
         AppointmentSlot appointmentSlot = availableSlots.get(0);
 
-        appointmentService.createAppointment(doctor, patient, appointmentSlot);
+        appointmentService.createAppointment(patient, appointmentSlot);
 
         availableSlots = appointmentSlotService.getAppointmentSlotsBetween(doctor,
                 LocalDateTime.of(2019, 1, 28, 10, 0, 0),
