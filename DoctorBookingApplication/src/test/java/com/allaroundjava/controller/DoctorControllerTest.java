@@ -54,6 +54,7 @@ public class DoctorControllerTest {
                 .content(newDoctor)
                 .header("Content-Type","application/xml"))
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.CREATED.value()))
-                .andExpect(MockMvcResultMatchers.content().string(containsString("Doctor John")));
+                .andExpect(MockMvcResultMatchers.xpath("/doctorDto/name", "%s")
+                        .string(containsString("Doctor John")));
     }
 }

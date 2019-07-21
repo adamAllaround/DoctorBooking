@@ -40,12 +40,6 @@ public class DoctorController {
         return ResponseEntity.status(HttpStatus.OK).body(doctorDto);
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/xml")
-    public ResponseEntity<DoctorDto> getAllDoctors() {
-
-        return ResponseEntity.status(HttpStatus.OK).body(new DoctorDto());
-    }
-
     @RequestMapping(method = RequestMethod.POST, produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<DoctorDto> createDoctor(@RequestBody  DoctorDto doctorInput) {
         Doctor doctor = DoctorDtoMapper.toEntity(doctorInput);
@@ -53,5 +47,11 @@ public class DoctorController {
         DoctorDto doctorDto = DoctorDtoMapper.toDto(doctor);
         doctorDto.add(linkTo(methodOn(DoctorController.class).getDoctor(doctor.getId())).withSelfRel());
         return ResponseEntity.status(HttpStatus.CREATED).body(doctorDto);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/xml")
+    public ResponseEntity<DoctorDto> getAllDoctors() {
+
+        return ResponseEntity.status(HttpStatus.OK).body(new DoctorDto());
     }
 }
