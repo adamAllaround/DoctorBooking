@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
+
 @RestController
 @RequestMapping("/slots")
 public class AppointmentSlotController {
@@ -36,14 +39,19 @@ public class AppointmentSlotController {
                 .orElseThrow(() -> new NotFoundException(String.format("Doctor with ID %d not found", appointmentSlotInput.getDoctorId())));
         AppointmentSlot appointmentSlot = AppointmentSlotMapper.toEntity(appointmentSlotInput, doctor);
         appointmentSlotService.addAppointmentSlot(appointmentSlot);
-        return ResponseEntity.status(HttpStatus.CREATED).body(AppointmentSlotMapper.toDto(appointmentSlot));
+
+        AppointmentSlotDto appointmentSlotDto = AppointmentSlotMapper.toDto(appointmentSlot);
+        appointmentSlotDto.add(linkTo(methodOn(AppointmentSlotController.class).getSlotById(appointmentSlot.getId())).withSelfRel());
+        return ResponseEntity.status(HttpStatus.CREATED).body(appointmentSlotDto);
     }
 
     @GetMapping(value = "/{id}", produces = "application/xml")
     public ResponseEntity<AppointmentSlotDto> getSlotById(@PathVariable("id") Long id) {
         AppointmentSlot appointmentSlot = appointmentSlotService.getById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Appointment Slot with id %d not found", id)));
-        return ResponseEntity.status(HttpStatus.OK).body(AppointmentSlotMapper.toDto(appointmentSlot));
+        AppointmentSlotDto appointmentSlotDto = AppointmentSlotMapper.toDto(appointmentSlot);
+        appointmentSlotDto.add(linkTo(methodOn(AppointmentSlotController.class).getSlotById(appointmentSlot.getId())).withSelfRel());
+        return ResponseEntity.status(HttpStatus.OK).body(appointmentSlotDto);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
@@ -55,6 +63,18 @@ public class AppointmentSlotController {
 
         List<AppointmentSlot> result = appointmentSlotService.getAppointmentSlotsBetween(doctor, startDate, endDate);
 
-        return ResponseEntity.status(HttpStatus.OK).body(AppointmentSlotMapper.toCollectionDto(result));
+        AppointmentSlotCollectionDto collectionDto = AppointmentSlotMapper.toCollectionDto(result);
+        buildHateoasForSlotCollection(doctorId, startDate, endDate, collectionDto);
+        return ResponseEntity.status(HttpStatus.OK).body(collectionDto);
+    }
+
+    private void buildHateoasForSlotCollection(Long doctorId,
+                                               LocalDateTime startDate,
+                                               LocalDateTime endDate,
+                                               AppointmentSlotCollectionDto collectionDto) {
+        for (AppointmentSlotDto dto : collectionDto.getAppointmentSlotDtoList()) {
+            dto.add(linkTo(methodOn(AppointmentSlotController.class).getSlotById(dto.getEntityId())).withSelfRel());
+        }
+        collectionDto.add(linkTo(methodOn(AppointmentSlotController.class).getSlots(doctorId, startDate, endDate)).withSelfRel());
     }
 }

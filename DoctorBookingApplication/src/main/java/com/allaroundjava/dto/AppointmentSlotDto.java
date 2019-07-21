@@ -1,6 +1,7 @@
 package com.allaroundjava.dto;
 
 import com.allaroundjava.adapter.LocalDateTimeAdapter;
+import org.springframework.hateoas.ResourceSupport;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -10,20 +11,20 @@ import java.time.LocalDateTime;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AppointmentSlotDto {
-    private Long id;
+public class AppointmentSlotDto extends ResourceSupport {
+    private Long entityId;
     private Long doctorId;
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime startTime;
     @XmlJavaTypeAdapter(LocalDateTimeAdapter.class)
     private LocalDateTime endTime;
 
-    public Long getId() {
-        return id;
+    public Long getEntityId() {
+        return entityId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEntityId(Long entityId) {
+        this.entityId = entityId;
     }
 
     public LocalDateTime getStartTime() {

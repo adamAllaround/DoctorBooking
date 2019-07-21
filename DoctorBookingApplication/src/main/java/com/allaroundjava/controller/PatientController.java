@@ -37,8 +37,9 @@ public class PatientController {
     public ResponseEntity<PatientDto> createPatient(@RequestBody PatientDto patientDto) {
         Patient patient = PatientDtoMaper.toEntity(patientDto);
         patientService.addPatient(patient);
-        patientDto.add(linkTo(methodOn(PatientController.class).getPatient(patient.getId())).withSelfRel());
-        return ResponseEntity.status(HttpStatus.CREATED).body(patientDto);
+        PatientDto resultDto = PatientDtoMaper.toDto(patient);
+        resultDto.add(linkTo(methodOn(PatientController.class).getPatient(patient.getId())).withSelfRel());
+        return ResponseEntity.status(HttpStatus.CREATED).body(resultDto);
     }
 
 }

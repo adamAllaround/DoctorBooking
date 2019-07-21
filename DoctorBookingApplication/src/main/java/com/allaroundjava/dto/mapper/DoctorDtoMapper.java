@@ -9,7 +9,7 @@ public final class DoctorDtoMapper {
 
     public static DoctorDto toDto(Doctor doctor) {
         DoctorDto doctorDto = new DoctorDto();
-        doctorDto.setId(doctor.getId());
+        doctorDto.setEntityId(doctor.getId());
         doctorDto.setName(doctor.getName());
         return doctorDto;
     }

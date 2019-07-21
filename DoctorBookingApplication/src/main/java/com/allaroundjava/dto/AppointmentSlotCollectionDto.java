@@ -1,5 +1,7 @@
 package com.allaroundjava.dto;
 
+import org.springframework.hateoas.ResourceSupport;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -8,7 +10,7 @@ import java.util.List;
 
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class AppointmentSlotCollectionDto {
+public class AppointmentSlotCollectionDto extends ResourceSupport {
     @XmlElement(name = "AppointmentSlotCollection")
     private List<AppointmentSlotDto> appointmentSlotDtoList;
 

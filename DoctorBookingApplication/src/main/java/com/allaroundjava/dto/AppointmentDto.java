@@ -7,16 +7,16 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AppointmentDto {
-    private Long id;
+    private Long entityId;
     private Long patientId;
     private Long appointmentSlotId;
 
-    public Long getId() {
-        return id;
+    public Long getEntityId() {
+        return entityId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setEntityId(Long entityId) {
+        this.entityId = entityId;
     }
 
     public Long getAppointmentSlotId() {

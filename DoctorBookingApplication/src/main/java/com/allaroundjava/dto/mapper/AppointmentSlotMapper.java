@@ -14,7 +14,7 @@ public class AppointmentSlotMapper {
 
     public static AppointmentSlotDto toDto(AppointmentSlot appointmentSlot) {
         AppointmentSlotDto dto = new AppointmentSlotDto();
-        dto.setId(appointmentSlot.getId());
+        dto.setEntityId(appointmentSlot.getId());
         dto.setStartTime(appointmentSlot.getStartTime());
         dto.setEndTime(appointmentSlot.getEndTime());
         dto.setDoctorId(appointmentSlot.getDoctor().getId());

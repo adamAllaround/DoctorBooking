@@ -8,10 +8,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -34,7 +32,7 @@ public class DoctorControllerIntegrationTest {
         ResponseEntity<DoctorDto> exchange = restTemplate.exchange("/doctors", HttpMethod.POST, requestEntity, DoctorDto.class);
         Assert.assertTrue(exchange.getStatusCode().is2xxSuccessful());
 
-        ResponseEntity<DoctorDto> forEntity = restTemplate.getForEntity("/doctors/"+exchange.getBody().getId(), DoctorDto.class);
+        ResponseEntity<DoctorDto> forEntity = restTemplate.getForEntity("/doctors/"+exchange.getBody().getEntityId(), DoctorDto.class);
         Assert.assertTrue(forEntity.getStatusCode().is2xxSuccessful());
 
         ResponseEntity<DoctorDto> nonExistentDoctor = restTemplate.getForEntity("/doctors/"+12478, DoctorDto.class);
