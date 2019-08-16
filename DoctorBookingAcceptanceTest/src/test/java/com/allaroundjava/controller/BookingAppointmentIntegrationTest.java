@@ -19,15 +19,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {TestJpaConfig.class, AppConfig.class, IntegrationTestConfig.class})
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        classes = {TestJpaConfig.class, AppConfig.class, IntegrationTestConfig.class})
 public class BookingAppointmentIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
