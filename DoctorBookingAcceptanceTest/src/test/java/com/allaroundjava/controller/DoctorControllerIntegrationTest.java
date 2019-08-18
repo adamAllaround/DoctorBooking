@@ -10,11 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -27,13 +23,17 @@ public class DoctorControllerIntegrationTest {
 
     @Test
     public void whenCreateDoctor_thenDoctorCanBeRetrieved() {
+        //Given DoctorDto object
         HttpEntity<DoctorDto> requestEntity = getDoctorDtoHttpEntity("Doctor John");
 
-        ResponseEntity<DoctorDto> exchange = restTemplate.exchange("/doctors", HttpMethod.POST, requestEntity, DoctorDto.class);
-        Assert.assertTrue(exchange.getStatusCode().is2xxSuccessful());
+        //When Post created DoctorDto
+        ResponseEntity<DoctorDto> postDoctor = restTemplate.exchange("/doctors", HttpMethod.POST, requestEntity, DoctorDto.class);
+        Assert.assertEquals(postDoctor.getStatusCode(), HttpStatus.CREATED);
+        Assert.assertNotNull(postDoctor.getBody().getEntityId());
 
-        ResponseEntity<DoctorDto> forEntity = restTemplate.getForEntity("/doctors/"+exchange.getBody().getEntityId(), DoctorDto.class);
-        Assert.assertTrue(forEntity.getStatusCode().is2xxSuccessful());
+        //Then Doctor can be retrieved
+        ResponseEntity<DoctorDto> getDoctor = restTemplate.getForEntity("/doctors/"+postDoctor.getBody().getEntityId(), DoctorDto.class);
+        Assert.assertTrue(getDoctor.getStatusCode().is2xxSuccessful());
 
         ResponseEntity<DoctorDto> nonExistentDoctor = restTemplate.getForEntity("/doctors/"+12478, DoctorDto.class);
         Assert.assertTrue(nonExistentDoctor.getStatusCode().is4xxClientError());
