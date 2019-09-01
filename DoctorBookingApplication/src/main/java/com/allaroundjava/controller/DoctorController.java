@@ -9,11 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -22,7 +18,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/doctors")
-public class DoctorController {
+public class DoctorController implements DoctorsApi {
     private final DoctorService doctorService;
 
     @Autowired
@@ -41,7 +37,7 @@ public class DoctorController {
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = "application/xml", consumes = "application/xml")
-    public ResponseEntity<DoctorDto> createDoctor(@RequestBody  DoctorDto doctorInput) {
+    public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorInput) {
         Doctor doctor = DoctorDtoMapper.toEntity(doctorInput);
         doctorService.addDoctor(doctor);
         DoctorDto doctorDto = DoctorDtoMapper.toDto(doctor);
