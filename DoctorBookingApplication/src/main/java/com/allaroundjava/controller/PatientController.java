@@ -14,8 +14,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/patients")
-public class PatientController {
+public class PatientController implements PatientsApi{
 
     private static final String PATIENT_NOT_FOUND = "Patient not found";
     private final PatientService patientService;
@@ -25,7 +24,6 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/xml", value = "/{id}")
     public ResponseEntity<PatientDto> getPatient(@PathVariable("id") Long id) {
         Patient patient = patientService.getById(id).orElseThrow(() -> new NotFoundException(PATIENT_NOT_FOUND));
         PatientDto patientDto = PatientDtoMaper.toDto(patient);
@@ -33,7 +31,6 @@ public class PatientController {
         return ResponseEntity.status(HttpStatus.OK).body(patientDto);
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<PatientDto> createPatient(@RequestBody PatientDto patientDto) {
         Patient patient = PatientDtoMaper.toEntity(patientDto);
         patientService.addPatient(patient);
@@ -41,5 +38,4 @@ public class PatientController {
         resultDto.add(linkTo(methodOn(PatientController.class).getPatient(patient.getId())).withSelfRel());
         return ResponseEntity.status(HttpStatus.CREATED).body(resultDto);
     }
-
 }

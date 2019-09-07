@@ -11,13 +11,14 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/doctors")
 public class DoctorController implements DoctorsApi {
     private final DoctorService doctorService;
 
@@ -26,7 +27,6 @@ public class DoctorController implements DoctorsApi {
         this.doctorService = doctorService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/xml", value = "/{id}")
     public ResponseEntity<DoctorDto> getDoctor(@PathVariable("id") Long id) {
         Optional<Doctor> doctorOptional = doctorService.getById(id);
         Doctor doctor = doctorOptional.orElseThrow(() -> new NotFoundException("Doctor Not Found"));
@@ -36,7 +36,6 @@ public class DoctorController implements DoctorsApi {
         return ResponseEntity.status(HttpStatus.OK).body(doctorDto);
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<DoctorDto> createDoctor(@RequestBody DoctorDto doctorInput) {
         Doctor doctor = DoctorDtoMapper.toEntity(doctorInput);
         doctorService.addDoctor(doctor);
@@ -45,9 +44,7 @@ public class DoctorController implements DoctorsApi {
         return ResponseEntity.status(HttpStatus.CREATED).body(doctorDto);
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/xml")
-    public ResponseEntity<DoctorDto> getAllDoctors() {
-
-        return ResponseEntity.status(HttpStatus.OK).body(new DoctorDto());
+    public ResponseEntity<List<DoctorDto>> getAllDoctors() {
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body(Collections.emptyList());
     }
 }

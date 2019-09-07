@@ -8,29 +8,29 @@ info:
 host: "localhost"
 basePath: "/v2/doctor-booking"
 tags:
-- name: "doctors"
-  description: "Everything about Doctors in the system"
+  - name: "doctors"
+    description: "Everything about Doctors in the system"
 schemes:
-- "http"
+  - "http"
 paths:
   /doctors:
     post:
       tags:
-      - "doctors"
+        - "doctors"
       summary: "Add a new doctor to Medical Clinic"
       description: ""
       operationId: "createDoctor"
       consumes:
-      - "application/xml"
+        - "application/xml"
       produces:
-      - "application/xml"
+        - "application/xml"
       parameters:
-      - in: "body"
-        name: "doctorDto"
-        description: "Doctor object that needs to be added to the clinic"
-        required: true
-        schema:
-          $ref: "#/definitions/DoctorDto"
+        - in: "body"
+          name: "doctorDto"
+          description: "Doctor object that needs to be added to the clinic"
+          required: true
+          schema:
+            $ref: "#/definitions/DoctorDto"
       responses:
         200:
           description: "Created Doctor"
@@ -41,30 +41,156 @@ paths:
   /doctors/{id}:
     get:
       tags:
-      - "doctors"
+        - "doctors"
       summary: "Retrieve existing doctor information"
       description: ""
       operationId: "getDoctor"
       consumes:
-      - "application/xml"
+        - "application/xml"
       produces:
-      - "application/xml"
+        - "application/xml"
       parameters:
-      - in: "path"
-        name: "id"
-        description: "Id of doctor that needs to be retrieved"
-        required: true
-        type: "integer"
-        format: "int64"
+        - in: "path"
+          name: "id"
+          description: "Id of doctor that needs to be retrieved"
+          required: true
+          type: "integer"
+          format: "int64"
       responses:
         200:
-            description: "Successfully retrieved Doctor"
-            schema:
+          description: "Successfully retrieved Doctor"
+          schema:
+            $ref: "#/definitions/DoctorDto"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Doctor with specified ID not found"
+  /doctors/:
+    get:
+      tags:
+        - "doctors"
+      summary: "Retrieve all doctors"
+      description: ""
+      operationId: "getAllDoctors"
+      consumes:
+        - "application/xml"
+      produces:
+        - "application/xml"
+      responses:
+        200:
+          description: "Successfully retrieved Doctors"
+          schema:
+            type: array
+            items:
               $ref: "#/definitions/DoctorDto"
         400:
           description: "Invalid ID supplied"
         404:
           description: "Doctor with specified ID not found"
+  /patients:
+    post:
+      tags:
+        - "patients"
+      summary: "Add a new patient to Medical Clinic"
+      description: ""
+      operationId: "createPatient"
+      consumes:
+        - "application/xml"
+      produces:
+        - "application/xml"
+      parameters:
+        - in: "body"
+          name: "patientDto"
+          description: "Patient object that needs to be added to the clinic"
+          required: true
+          schema:
+            $ref: '#/definitions/PatientDto'
+      responses:
+        200:
+          description: "Created Patient"
+          schema:
+            $ref: '#/definitions/PatientDto'
+        405:
+          description: "Invalid input"
+  /patients/{id}:
+    get:
+      tags:
+        - "patients"
+      summary: "Retrieve existing patient information"
+      description: ""
+      operationId: "getPatient"
+      consumes:
+        - "application/xml"
+      produces:
+        - "application/xml"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Id of patient that needs to be retrieved"
+          required: true
+          type: "integer"
+          format: "int64"
+      responses:
+        200:
+          description: "Successfully retrieved Patient"
+          schema:
+            $ref: '#/definitions/PatientDto'
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "PAtient with specified ID not found"
+  /slots:
+    post:
+      tags:
+        - "slots"
+      summary: "Add a new appointment slot at given date for specified doctor"
+      description: ""
+      operationId: "createSlot"
+      consumes:
+        - "application/xml"
+      produces:
+        - "application/xml"
+      parameters:
+        - in: "body"
+          name: "appointmentSlotDto"
+          description: "Details of Appointment Slot"
+          required: true
+          schema:
+            $ref: '#/definitions/AppointmentSlotDto'
+      responses:
+        200:
+          description: "Created Appointment Slot "
+          schema:
+            $ref: '#/definitions/AppointmentSlotDto'
+        405:
+          description: "Invalid input"
+  /slots/{id}:
+    get:
+      tags:
+        - "slots"
+      summary: "Retrieve existing Appointment Slot by Id"
+      description: ""
+      operationId: "getSlotById"
+      consumes:
+        - "application/xml"
+      produces:
+        - "application/xml"
+      parameters:
+        - in: "path"
+          name: "id"
+          description: "Appointment Slot id"
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: "Successfully retrieved Appointment Slot"
+          schema:
+            $ref: '#/definitions/AppointmentSlotDto'
+        400:
+          description: "Invalid ID supplied"
+        404:
+            description: "Appointment Slot with specified ID not found"
 definitions:
   DoctorDto:
     type: "object"
@@ -78,7 +204,40 @@ definitions:
       name:
         type: "string"
     xml:
-      name: "Order"
+      name: "DoctorDto"
+  PatientDto:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      entityId:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "PatientDto"
+  AppointmentSlotDto:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      entityId:
+        type: "integer"
+        format: "int64"
+      doctorId:
+        type: "integer"
+        format: "int64"
+      startTime:
+        type: "string"
+        format: 'date-time'
+      endTime:
+        type: "string"
+        format: 'date-time'
+    xml:
+      name: "PatientDto"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
