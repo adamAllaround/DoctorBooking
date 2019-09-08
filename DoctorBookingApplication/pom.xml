@@ -25,6 +25,7 @@
                         <configuration>
                             <inputSpec>${project.basedir}/src/main/resources/swagger.yaml</inputSpec>
                             <language>spring</language>
+                            <library>spring-boot</library>
                             <apiPackage>com.allaroundjava.controller</apiPackage>
                             <modelPackage>com.allaroundjava.dto</modelPackage>
                             <generateApis>true</generateApis>
@@ -34,9 +35,16 @@
                             <generateModels>false</generateModels>
                             <generateSupportingFiles>false</generateSupportingFiles>
                             <languageSpecificPrimitives>true</languageSpecificPrimitives>
+                            <typeMappings>
+                                <typeMapping>OffsetDateTime=java.time.LocalDateTime</typeMapping>
+                            </typeMappings>
+                            <importMappings>
+                                <importMapping>LocalDateTime=OffsetDateTime</importMapping>
+                            </importMappings>
                             <configOptions>
                                 <interfaceOnly>true</interfaceOnly>
                                 <java8>false</java8>
+                                <dateLibrary>java8</dateLibrary>
                             </configOptions>
                         </configuration>
                     </execution>

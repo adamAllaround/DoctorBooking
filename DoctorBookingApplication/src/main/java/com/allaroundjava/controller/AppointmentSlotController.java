@@ -23,7 +23,7 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
 @RequestMapping("/slots")
-public class AppointmentSlotController {
+public class AppointmentSlotController implements SlotsApi {
     private final AppointmentSlotService appointmentSlotService;
     private final DoctorService doctorService;
 
