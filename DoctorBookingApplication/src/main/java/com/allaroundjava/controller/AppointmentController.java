@@ -20,7 +20,7 @@ import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 @RestController
 @RequestMapping("/appointments")
-public class AppointmentController {
+public class AppointmentController implements AppointmentsApi {
     private AppointmentService appointmentService;
     private AppointmentSlotService appointmentSlotService;
     private PatientService patientService;

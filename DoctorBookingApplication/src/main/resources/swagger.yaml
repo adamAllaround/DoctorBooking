@@ -228,6 +228,31 @@ paths:
             $ref: '#/definitions/AppointmentSlotCollectionDto'
         400:
           description: "Invalid data supplied"
+  /appointments:
+    post:
+      tags:
+        - "appointments"
+      summary: "Add a new appointment for given patient and appointment slot"
+      description: ""
+      operationId: "createAppointment"
+      consumes:
+        - "application/xml"
+      produces:
+        - "application/xml"
+      parameters:
+        - in: "body"
+          name: "appointmentDto"
+          description: "Details of Appointment"
+          required: true
+          schema:
+            $ref: '#/definitions/AppointmentDto'
+      responses:
+        200:
+          description: "Created Appointment "
+          schema:
+            $ref: '#/definitions/AppointmentDto'
+        405:
+          description: "Invalid input"
 definitions:
   DoctorDto:
     type: "object"
@@ -287,6 +312,20 @@ definitions:
           $ref: '#/definitions/AppointmentSlotDto'
     xml:
       name: "AppointmentSlotDCollectionDto"
+  AppointmentDto:
+    type: "object"
+    properties:
+      entityId:
+        type: "integer"
+        format: "int64"
+      patientId:
+        type: "integer"
+        format: "int64"
+      appointmentSlotId:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "AppointmentDto"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
