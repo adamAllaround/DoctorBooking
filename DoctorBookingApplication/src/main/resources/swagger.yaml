@@ -45,8 +45,6 @@ paths:
       summary: "Retrieve existing doctor information"
       description: ""
       operationId: "getDoctor"
-      consumes:
-        - "application/xml"
       produces:
         - "application/xml"
       parameters:
@@ -72,8 +70,6 @@ paths:
       summary: "Retrieve all doctors"
       description: ""
       operationId: "getAllDoctors"
-      consumes:
-        - "application/xml"
       produces:
         - "application/xml"
       responses:
@@ -119,8 +115,6 @@ paths:
       summary: "Retrieve existing patient information"
       description: ""
       operationId: "getPatient"
-      consumes:
-        - "application/xml"
       produces:
         - "application/xml"
       parameters:
@@ -171,8 +165,6 @@ paths:
       summary: "Retrieve existing Appointment Slot by Id"
       description: ""
       operationId: "getSlotById"
-      consumes:
-        - "application/xml"
       produces:
         - "application/xml"
       parameters:
@@ -198,8 +190,6 @@ paths:
       summary: "Retrieve all appointment slots for given doctor in specified dates"
       description: ""
       operationId: "getSlots"
-      consumes:
-        - "application/xml"
       produces:
         - "application/xml"
       parameters:
