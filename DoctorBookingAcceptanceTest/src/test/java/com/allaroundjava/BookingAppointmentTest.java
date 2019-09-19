@@ -1,7 +1,6 @@
 package com.allaroundjava;
 
 import com.allaroundjava.config.AppConfig;
-import com.allaroundjava.config.JpaConfig;
 import com.allaroundjava.config.TestJpaConfig;
 import com.allaroundjava.model.AppointmentSlot;
 import com.allaroundjava.model.Doctor;

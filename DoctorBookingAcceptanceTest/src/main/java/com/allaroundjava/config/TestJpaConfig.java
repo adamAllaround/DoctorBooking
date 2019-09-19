@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import com.allaroundjava.config.JpaConfig;
 
 import javax.sql.DataSource;
 
