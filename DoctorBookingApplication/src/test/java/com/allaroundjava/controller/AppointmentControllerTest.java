@@ -25,7 +25,7 @@ public class AppointmentControllerTest {
     private AppointmentSlotService appointmentSlotService;
     private PatientService patientService;
     private MockMvc mockMvc;
-    private final static String REQUEST_BODY = "<appointmentDto><patientId>1</patientId><appointmentSlotId>1</appointmentSlotId><startTime>2019-05-13T20:00:00</startTime><endTime>2019-05-13T21:00:00</endTime></appointmentDto>";
+    private final static String REQUEST_BODY = "<AppointmentDto><patientId>1</patientId><appointmentSlotId>1</appointmentSlotId><startTime>2019-05-13T20:00:00</startTime><endTime>2019-05-13T21:00:00</endTime></AppointmentDto>";
 
     public AppointmentControllerTest() {
         this.appointmentService = Mockito.mock(AppointmentService.class);

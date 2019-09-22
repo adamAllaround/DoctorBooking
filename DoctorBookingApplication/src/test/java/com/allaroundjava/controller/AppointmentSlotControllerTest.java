@@ -46,7 +46,7 @@ public class AppointmentSlotControllerTest {
 
     @Test
     public void whenValidRequest_andDoctorExists_thenCreated() throws Exception {
-        String requestContent = "<appointmentSlotDto><startTime>2019-05-14T20:00:22</startTime><endTime>2019-05-14T21:00:22</endTime><doctorId>1</doctorId></appointmentSlotDto>";
+        String requestContent = "<AppointmentSlotDto><startTime>2019-05-14T20:00:22</startTime><endTime>2019-05-14T21:00:22</endTime><doctorId>1</doctorId></AppointmentSlotDto>";
         Mockito.doReturn(Optional.of(doctor)).when(doctorService).getById(1L);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/slots")
@@ -59,7 +59,7 @@ public class AppointmentSlotControllerTest {
 
     @Test
     public void whenValidRequest_andDoctorNotExists_thenNotFound() throws Exception {
-        String requestContent = "<appointmentSlotDto><startTime>2019-05-14T20:00:22</startTime><endTime>2019-05-14T21:00:22</endTime><doctorId>1</doctorId></appointmentSlotDto>";
+        String requestContent = "<AppointmentSlotDto><startTime>2019-05-14T20:00:22</startTime><endTime>2019-05-14T21:00:22</endTime><doctorId>1</doctorId></AppointmentSlotDto>";
         Mockito.doReturn(Optional.empty()).when(doctorService).getById(1L);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/slots")

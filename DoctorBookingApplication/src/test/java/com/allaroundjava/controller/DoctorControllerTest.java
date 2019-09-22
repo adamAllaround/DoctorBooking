@@ -49,12 +49,12 @@ public class DoctorControllerTest {
 
     @Test
     public void whenPostDoctor_thenAddDoctorCalled_andDoctorReturned() throws Exception {
-        String newDoctor = "<doctorDto><name>Doctor John</name></doctorDto>";
+        String newDoctor = "<DoctorDto><name>Doctor John</name></DoctorDto>";
         mockMvc.perform(MockMvcRequestBuilders.post("/doctors")
                 .content(newDoctor)
                 .header("Content-Type","application/xml"))
                 .andExpect(MockMvcResultMatchers.status().is(HttpStatus.CREATED.value()))
-                .andExpect(MockMvcResultMatchers.xpath("/doctorDto/name", "%s")
+                .andExpect(MockMvcResultMatchers.xpath("/DoctorDto/name", "%s")
                         .string(containsString("Doctor John")));
     }
 }

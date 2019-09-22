@@ -5,8 +5,8 @@ info:
   title: "Doctor Booking Application"
   contact:
     email: "adam@allaroundjava.com"
-host: "localhost"
-basePath: "/v2/doctor-booking"
+host: "localhost:8080"
+basePath: "/"
 tags:
   - name: "doctors"
     description: "Everything about Doctors in the system"
@@ -26,7 +26,7 @@ paths:
         - "application/xml"
       parameters:
         - in: "body"
-          name: "doctorDto"
+          name: "DoctorDto"
           description: "Doctor object that needs to be added to the clinic"
           required: true
           schema:
@@ -96,7 +96,7 @@ paths:
         - "application/xml"
       parameters:
         - in: "body"
-          name: "patientDto"
+          name: "PatientDto"
           description: "Patient object that needs to be added to the clinic"
           required: true
           schema:
@@ -247,9 +247,6 @@ definitions:
   DoctorDto:
     type: "object"
     properties:
-      id:
-        type: "integer"
-        format: "int64"
       entityId:
         type: "integer"
         format: "int64"
@@ -260,9 +257,6 @@ definitions:
   PatientDto:
     type: "object"
     properties:
-      id:
-        type: "integer"
-        format: "int64"
       entityId:
         type: "integer"
         format: "int64"
@@ -273,9 +267,6 @@ definitions:
   AppointmentSlotDto:
     type: "object"
     properties:
-      id:
-        type: "integer"
-        format: "int64"
       entityId:
         type: "integer"
         format: "int64"
@@ -293,9 +284,6 @@ definitions:
   AppointmentSlotCollectionDto:
     type: "object"
     properties:
-      id:
-        type: "integer"
-        format: "int64"
       appointmentSlotDtoList:
         type: array
         items:

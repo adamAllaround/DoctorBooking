@@ -49,7 +49,7 @@ public class PatientControllerTest {
 
     @Test
     public void whenPostDoctor_thenAddDoctorCalled_andDoctorReturned() throws Exception {
-        String newPatient = "<patientDto><name>Patient John</name></patientDto>";
+        String newPatient = "<PatientDto><name>Patient John</name></PatientDto>";
         mockMvc.perform(MockMvcRequestBuilders.post("/patients")
                 .content(newPatient)
                 .header("Content-Type","application/xml"))

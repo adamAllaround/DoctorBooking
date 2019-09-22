@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
-@XmlRootElement
+@XmlRootElement(name = "AppointmentSlotCollectionDto")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AppointmentSlotCollectionDto extends ResourceSupport {
     @XmlElement(name = "AppointmentSlotCollection")

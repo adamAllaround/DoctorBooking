@@ -4,7 +4,7 @@ import org.springframework.hateoas.ResourceSupport;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlRootElement
+@XmlRootElement(name = "DoctorDto")
 public class DoctorDto extends ResourceSupport {
     private Long entityId;
     private String name;

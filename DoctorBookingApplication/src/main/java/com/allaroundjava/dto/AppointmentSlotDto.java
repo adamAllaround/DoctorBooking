@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDateTime;
 
-@XmlRootElement
+@XmlRootElement(name = "AppointmentSlotDto")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class AppointmentSlotDto extends ResourceSupport {
     private Long entityId;

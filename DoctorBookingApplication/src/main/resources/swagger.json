@@ -1,0 +1,461 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a specification for DoctorBooking Api. You can find out more about this application at [htp://allaroundjava.com](http://allaroundjava.com)",
+    "version": "1.0",
+    "title": "Doctor Booking Application",
+    "contact": {
+      "email": "adam@allaroundjava.com"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "doctors",
+      "description": "Everything about Doctors in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/doctors": {
+      "post": {
+        "tags": [
+          "doctors"
+        ],
+        "summary": "Add a new doctor to Medical Clinic",
+        "description": "",
+        "operationId": "createDoctor",
+        "consumes": [
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "DoctorDto",
+            "description": "Doctor object that needs to be added to the clinic",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/DoctorDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created Doctor",
+            "schema": {
+              "$ref": "#/definitions/DoctorDto"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/doctors/{id}": {
+      "get": {
+        "tags": [
+          "doctors"
+        ],
+        "summary": "Retrieve existing doctor information",
+        "description": "",
+        "operationId": "getDoctor",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of doctor that needs to be retrieved",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved Doctor",
+            "schema": {
+              "$ref": "#/definitions/DoctorDto"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Doctor with specified ID not found"
+          }
+        }
+      }
+    },
+    "/doctors/": {
+      "get": {
+        "tags": [
+          "doctors"
+        ],
+        "summary": "Retrieve all doctors",
+        "description": "",
+        "operationId": "getAllDoctors",
+        "produces": [
+          "application/xml"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved Doctors",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DoctorDto"
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Doctor with specified ID not found"
+          }
+        }
+      }
+    },
+    "/patients": {
+      "post": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Add a new patient to Medical Clinic",
+        "description": "",
+        "operationId": "createPatient",
+        "consumes": [
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "PatientDto",
+            "description": "Patient object that needs to be added to the clinic",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/PatientDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created Patient",
+            "schema": {
+              "$ref": "#/definitions/PatientDto"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/patients/{id}": {
+      "get": {
+        "tags": [
+          "patients"
+        ],
+        "summary": "Retrieve existing patient information",
+        "description": "",
+        "operationId": "getPatient",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Id of patient that needs to be retrieved",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved Patient",
+            "schema": {
+              "$ref": "#/definitions/PatientDto"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "PAtient with specified ID not found"
+          }
+        }
+      }
+    },
+    "/slots": {
+      "post": {
+        "tags": [
+          "slots"
+        ],
+        "summary": "Add a new appointment slot at given date for specified doctor",
+        "description": "",
+        "operationId": "createSlot",
+        "consumes": [
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "appointmentSlotDto",
+            "description": "Details of Appointment Slot",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppointmentSlotDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created Appointment Slot ",
+            "schema": {
+              "$ref": "#/definitions/AppointmentSlotDto"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/slots/{id}": {
+      "get": {
+        "tags": [
+          "slots"
+        ],
+        "summary": "Retrieve existing Appointment Slot by Id",
+        "description": "",
+        "operationId": "getSlotById",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Appointment Slot id",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved Appointment Slot",
+            "schema": {
+              "$ref": "#/definitions/AppointmentSlotDto"
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Appointment Slot with specified ID not found"
+          }
+        }
+      }
+    },
+    "/slots/": {
+      "get": {
+        "tags": [
+          "slots"
+        ],
+        "summary": "Retrieve all appointment slots for given doctor in specified dates",
+        "description": "",
+        "operationId": "getSlots",
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "doctorId",
+            "description": "Id of doctor for whom appointments to retrieve",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "in": "query",
+            "name": "startDate",
+            "description": "Slots after this date will be retrieved",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          },
+          {
+            "in": "query",
+            "name": "endDate",
+            "description": "Slots up to this date will be retrieved",
+            "required": true,
+            "type": "string",
+            "format": "date-time"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved appointment slots",
+            "schema": {
+              "$ref": "#/definitions/AppointmentSlotCollectionDto"
+            }
+          },
+          "400": {
+            "description": "Invalid data supplied"
+          }
+        }
+      }
+    },
+    "/appointments": {
+      "post": {
+        "tags": [
+          "appointments"
+        ],
+        "summary": "Add a new appointment for given patient and appointment slot",
+        "description": "",
+        "operationId": "createAppointment",
+        "consumes": [
+          "application/xml"
+        ],
+        "produces": [
+          "application/xml"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "appointmentDto",
+            "description": "Details of Appointment",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppointmentDto"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created Appointment ",
+            "schema": {
+              "$ref": "#/definitions/AppointmentDto"
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "DoctorDto": {
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "DoctorDto"
+      }
+    },
+    "PatientDto": {
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "xml": {
+        "name": "PatientDto"
+      }
+    },
+    "AppointmentSlotDto": {
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "doctorId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "startTime": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "endTime": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "xml": {
+        "name": "AppointmentSlotDto"
+      }
+    },
+    "AppointmentSlotCollectionDto": {
+      "type": "object",
+      "properties": {
+        "appointmentSlotDtoList": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppointmentSlotDto"
+          }
+        }
+      },
+      "xml": {
+        "name": "AppointmentSlotDCollectionDto"
+      }
+    },
+    "AppointmentDto": {
+      "type": "object",
+      "properties": {
+        "entityId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "patientId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "appointmentSlotId": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "xml": {
+        "name": "AppointmentDto"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}
