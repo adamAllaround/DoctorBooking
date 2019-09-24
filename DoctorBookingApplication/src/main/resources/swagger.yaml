@@ -32,7 +32,7 @@ paths:
           schema:
             $ref: "#/definitions/DoctorDto"
       responses:
-        200:
+        201:
           description: "Created Doctor"
           schema:
             $ref: "#/definitions/DoctorDto"
@@ -152,7 +152,7 @@ paths:
           schema:
             $ref: '#/definitions/AppointmentSlotDto'
       responses:
-        200:
+        201:
           description: "Created Appointment Slot "
           schema:
             $ref: '#/definitions/AppointmentSlotDto'
@@ -237,7 +237,7 @@ paths:
           schema:
             $ref: '#/definitions/AppointmentDto'
       responses:
-        200:
+        201:
           description: "Created Appointment "
           schema:
             $ref: '#/definitions/AppointmentDto'
