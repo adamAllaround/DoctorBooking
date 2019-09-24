@@ -1,5 +1,6 @@
 package com.allaroundjava.controller;
 
+import com.allaroundjava.controller.advice.RestExceptionHandler;
 import com.allaroundjava.model.Doctor;
 import com.allaroundjava.service.DoctorService;
 import org.junit.Before;
@@ -27,7 +28,9 @@ public class DoctorControllerTest {
 
     @Before
     public void setUp() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(doctorController).build();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(doctorController)
+                .setControllerAdvice(new RestExceptionHandler())
+                .build();
     }
 
     @Test

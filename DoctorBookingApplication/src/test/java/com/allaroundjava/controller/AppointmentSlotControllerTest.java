@@ -1,5 +1,6 @@
 package com.allaroundjava.controller;
 
+import com.allaroundjava.controller.advice.RestExceptionHandler;
 import com.allaroundjava.model.AppointmentSlot;
 import com.allaroundjava.model.Doctor;
 import com.allaroundjava.service.AppointmentSlotService;
@@ -41,7 +42,9 @@ public class AppointmentSlotControllerTest {
 
     @Before
     public void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(appointmentSlotController).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(appointmentSlotController)
+                .setControllerAdvice(new RestExceptionHandler())
+                .build();
     }
 
     @Test
