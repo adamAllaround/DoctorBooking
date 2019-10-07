@@ -11,9 +11,11 @@ import com.allaroundjava.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,7 +24,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/slots")
 public class AppointmentSlotController implements SlotsApi {
     private final AppointmentSlotService appointmentSlotService;
     private final DoctorService doctorService;
@@ -33,7 +34,6 @@ public class AppointmentSlotController implements SlotsApi {
         this.doctorService = doctorService;
     }
 
-    @PostMapping(produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<AppointmentSlotDto> createSlot(@RequestBody AppointmentSlotDto appointmentSlotInput) {
         Doctor doctor = doctorService.getById(appointmentSlotInput.getDoctorId())
                 .orElseThrow(() -> new NotFoundException(String.format("Doctor with ID %d not found", appointmentSlotInput.getDoctorId())));
@@ -45,7 +45,6 @@ public class AppointmentSlotController implements SlotsApi {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentSlotDto);
     }
 
-    @GetMapping(value = "/{id}", produces = "application/xml")
     public ResponseEntity<AppointmentSlotDto> getSlotById(@PathVariable("id") Long id) {
         AppointmentSlot appointmentSlot = appointmentSlotService.getById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Appointment Slot with id %d not found", id)));
@@ -54,7 +53,6 @@ public class AppointmentSlotController implements SlotsApi {
         return ResponseEntity.status(HttpStatus.OK).body(appointmentSlotDto);
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<AppointmentSlotCollectionDto> getSlots(@RequestParam Long doctorId,
                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime startDate,
                                                                  @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endDate) {

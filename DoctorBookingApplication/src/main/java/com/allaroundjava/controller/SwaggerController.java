@@ -13,21 +13,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class SwaggerController {
 
     @RequestMapping(method = RequestMethod.GET, path = "/v2/api-docs", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Resource apiDocs() {
+    public Resource apiJsonEndpoint() {
         return new ClassPathResource("swagger.json");
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/swagger-resources", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object resources() {
+    public Object swaggerResources() {
         return ImmutableList.of(ImmutableMap.of(
                 "name", "default",
                 "url", "/v2/api-docs",
-                "location", "/v2/api-docs", // should match the endpoint exposing Swagger JSON
+                "location", "/v2/api-docs", // this should match the endpoint exposing Swagger JSON
                 "swaggerVersion", "2.0"));
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/swagger-resources/configuration/security", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object securityConfig() {
+    public Object swagerSecurityConfig() {
         return ImmutableList.of(ImmutableMap.of(
                 "apiKeyVehicle", "header",
                 "scopeSeparator", ",",
@@ -35,7 +35,7 @@ public class SwaggerController {
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/swagger-resources/configuration/ui", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object uiConfig() {
+    public Object swaggerUiConfig() {
         return "{\"deepLinking\":true," +
                 "\"displayOperationId\":false," +
                 "\"defaultModelsExpandDepth\":1," +

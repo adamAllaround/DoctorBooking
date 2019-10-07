@@ -30,7 +30,7 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <inputSpec>${project.basedir}/src/main/resources/swagger.json</inputSpec>
+                            <inputSpec>${project.basedir}/src/main/resources/swagger.yaml</inputSpec>
                             <language>spring</language>
                             <library>spring-boot</library>
                             <apiPackage>com.allaroundjava.controller</apiPackage>

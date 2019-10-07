@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import static org.springframework.http.MediaType.APPLICATION_XML_VALUE;
 
 @RestController
-@RequestMapping("/appointments")
 public class AppointmentController implements AppointmentsApi {
     private AppointmentService appointmentService;
     private AppointmentSlotService appointmentSlotService;
@@ -32,7 +31,6 @@ public class AppointmentController implements AppointmentsApi {
 
     }
 
-    @PostMapping(consumes = APPLICATION_XML_VALUE, produces = APPLICATION_XML_VALUE)
     public ResponseEntity<AppointmentDto> createAppointment(@RequestBody AppointmentDto appointmentDto) {
         Patient patient = patientService.getById(appointmentDto.getPatientId()).orElseThrow(() -> new NotFoundException("Patient cannot be found"));
         AppointmentSlot appointmentSlot = appointmentSlotService.getById(appointmentDto.getAppointmentSlotId()).orElseThrow(() -> new NotFoundException("Appointment Slot cannot be found"));
