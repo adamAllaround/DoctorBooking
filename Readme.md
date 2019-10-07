@@ -8,7 +8,7 @@ This is a set of user stories characterizing each application version.
 No application roles are assumed to exist, therefore user stories are all written from a perspective of a "user".
 
 Version 1.0 is a simple service infrastructure for adding meeting slots and booking appointments. 
-Here are the stories for version 0.1.
+Here are the stories:
 * As user I can add a Doctor
 * As a user I can add a Patient
 * As user I can add a period in which doctor is available for a visit
